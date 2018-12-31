@@ -92,7 +92,7 @@ $(document).ready(function() {
         };
 
         $('#editModal').modal('show');
-
+        
         $('#btn-editarAlmuerzo').click(function(){
             
             var horaI = document.getElementById("recipient-hora-editar").value;
@@ -100,19 +100,15 @@ $(document).ready(function() {
             var grasaI = document.getElementById('recipient-grasa-editar').value;
             var verduraI = document.getElementById('recipient-verdura-editar').value;
             var cerealI = document.getElementById('recipient-cereal-editar').value;
-            var horaFinal = horaI+":00";
-            
+                        
             $.ajax({ 
                 type: "POST",
                 url: "../php/getDieta.php",
-                data:{ id: idAlmuerzo, proteina: proteinaI, grasa: grasaI, verdura: verduraI, cereal: cerealI, hora: horaFinal, action: "edit" },
-                success: function(e) { 
-                    
+                data:{ id: idAlmuerzo, proteina: proteinaI, grasa: grasaI, verdura: verduraI, cereal: cerealI, hora: horaI, action: "edit" },
+                success: function(e) {                     
                     $('#editModal').modal('hide');
-                   alert(e);
                     alertify.notify(e.trim()+' se actualizó al catálogo de verduras', 'success', 10, function(){  console.log('dismissed'); });
-                    window.location.replace('almuerzo.php');
-                    
+                    window.location.replace('almuerzo.php');                    
                 }
             });
         });  

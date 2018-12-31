@@ -44,7 +44,7 @@
                 $SQL->execute();
                 while($Almuerzo = $SQL->fetch(PDO::FETCH_ASSOC)){
                     echo '<tr id="'.$Almuerzo['idalmuerzo'].'">
-                        <td>'.$Almuerzo['hora_armuerzo'].'</td>
+                        <td>'.date("g:i a", strtotime($Almuerzo['hora_armuerzo'])).'</td>
                         <td >'.$Almuerzo['nombre_proteina'].'</td>
                         <td>'.$Almuerzo['nombre_grasa'].'</td>
                         <td>'.$Almuerzo['nombre_verdura'].'</td>
@@ -186,6 +186,28 @@
             }
               
         }
+
+        public function seleccionLacteo(){
+            try{
+                $SQL = $this->CONECCIONDIETA->prepare("SELECT 
+                                                        idlacteo, 
+                                                        nombre_lacteo, 
+                                                        porcion_lacteo 
+                                                        FROM lacteo");
+
+                $SQL->execute();
+                
+                while($Fruta = $SQL->fetch(PDO::FETCH_ASSOC)){
+                    echo '<option value="'.$Fruta['idlacteo'].'">'.$Fruta['nombre_lacteo'].' '.$Fruta['porcion_lacteo'].'</option>';
+                }
+            }catch(PDOException $e){
+                echo '<div class="alert alert-dismissable alert-danger">Ocurrió un error: '.$e->getMessage().'
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        </div>';
+            }
+              
+        }
+
         public function insertAlmuerzo($hora, $proteina, $grasa, $verdura, $cereal, $usuario){
             try{
                 $SQL = $this->CONECCIONDIETA->prepare("INSERT INTO 
@@ -269,13 +291,13 @@
                     echo '<tr id="'.$Desayuno['iddesayuno'].'">
                             <td>'.$Desayuno['tipo_desayuno'].'</td>
                             <td >'.$Desayuno['descripcion_desayuno'].'</td>
-                            <td>'.$Desayuno['hora_desayuno'].'</td>
+                            <td>'.date("g:i a", strtotime($Desayuno['hora_desayuno'])).'</td>
                             <td> 
                                 <div> 
-                                    <a href="#" class="editar" data-tipoDesayuno="'.$Desayuno['tipo_desayuno'].'"
+                                    <a href="#" class="editar" data-tipodesayuno="'.$Desayuno['tipo_desayuno'].'"
                                         data-id="'.$Desayuno['iddesayuno'].'"
                                         data-descripcion="'.$Desayuno['descripcion_desayuno'].'" 
-                                        data-horaDesayuno="'.$Desayuno['hora_desayuno'].'">
+                                        data-horadesayuno="'.$Desayuno['hora_desayuno'].'">
                                             <i class="glyphicon glyphicon-pencil"></i>
                                     </a> 
                                 </div>
@@ -329,7 +351,7 @@
                                                         desayuno 
                                                     SET 
                                                         tipo_desayuno =:alimento,
-                                                        descripcion_desayuno =:desayuno,
+                                                        descripcion_desayuno =:descripcion,
                                                         hora_desayuno =:hora                                                        
                                                     WHERE 
                                                         iddesayuno =:id");
@@ -392,7 +414,7 @@
                 $SQL->execute();
                 while($Comida = $SQL->fetch(PDO::FETCH_ASSOC)){
                     echo '<tr id="'.$Comida['idcomida'].'">
-                        <td>'.$Comida['hora_comida'].'</td>
+                        <td>'.date("g:i a", strtotime($Comida['hora_comida'])).'</td>
                         <td>'.$Comida['nombre_grasa'].'</td>
                         <td >'.$Comida['nombre_proteina'].'</td>
                         <td>'.$Comida['nombre_verdura'].'</td>
@@ -506,7 +528,7 @@
                 $SQL->execute();
                 while($Colacion = $SQL->fetch(PDO::FETCH_ASSOC)){
                     echo '<tr id="'.$Colacion['idcolacion_uno'].'">
-                        <td>'.$Colacion['hora_colacion'].'</td>
+                        <td>'.date("g:i a", strtotime($Colacion['hora_colacion'])).'</td>
                         <td>'.$Colacion['nombre_fruta'].'</td>
                         <td >'.$Colacion['porcion_fruta'].'</td>
                         
@@ -614,14 +636,14 @@
                 ");
                 $SQL->execute();
                 while($Cena = $SQL->fetch(PDO::FETCH_ASSOC)){
-                    echo '<tr id="'.$Cena['idcena'].'">
-                        <td>'.$Cena['hora_cena'].'</td>
+                    echo '<tr id="uno'.$Cena['idcena'].'">
+                        <td>'.date("g:i a", strtotime($Cena['hora_cena'])).'</td>
                         <td>'.$Cena['nombre_cena'].'</td>
                         <td >'.$Cena['nombre_cereal'].'</td>
                         <td >'.$Cena['nombre_lacteo'].'</td>
                         <td> 
                             <div> 
-                                <a href="#" class="editar" data-horacena="'.$Cena['hora_cena'].'"
+                                <a href="#" class="editarCenaUno" data-horacena="'.$Cena['hora_cena'].'" data-cena="'.$Cena['idcena'].'"
                                    data-tipocena="'.$Cena['idtipo_cena'].'" data-cereal="'.$Cena['idcereal'].'"
                                    data-lacteo="'.$Cena['idlacteo'].'">
 
@@ -629,7 +651,7 @@
                                 </a> 
                             </div>
                         </td>
-                        <td> <div class="div-eliminar" data="'.$Cena['idcena'].'" id="div-eliminar'.$Cena['idcena'].'"> <a class="eliminar" id="eliminar'.$Cena['idcena'].'" href="#"><i class="glyphicon glyphicon-remove"></i></a></div> </td>                    
+                        <td> <div class="div-eliminar" data="'.$Cena['idcena'].'" id="div-eliminar'.$Cena['idcena'].'"> <a class="eliminarCenaUno" id="eliminar'.$Cena['idcena'].'" href="#"><i class="glyphicon glyphicon-remove"></i></a></div> </td>                    
                     </tr>';
                 }
             } catch(PDOException $e){
@@ -674,17 +696,18 @@
                 ");
                 $SQL->execute();
                 while($Cena = $SQL->fetch(PDO::FETCH_ASSOC)){
-                    echo '<tr id="'.$Cena['idcena'].'">
-                        <td>'.$Cena['hora_cena'].'</td>
+                    echo '<tr id="dos'.$Cena['idcena'].'">
+                        <td>'.date("g:i a", strtotime($Cena['hora_cena'])).'</td>
                         <td>'.$Cena['nombre_cena'].'</td>
                         <td >'.$Cena['nombre_cereal'].'</td>
                         <td >'.$Cena['nombre_proteina'].'</td>
                         <td >'.$Cena['nombre_verdura'].'</td>
                         <td> 
                             <div> 
-                                <a href="#" class="editar" data-horacena="'.$Cena['hora_cena'].'"
+                                <a href="#" class="editarCenaDos" data-horacena="'.$Cena['hora_cena'].'"
                                    data-tipocena="'.$Cena['idtipo_cena'].'" data-cereal="'.$Cena['idcereal'].'"
-                                   data-proteina="'.$Cena['idproteina'].'" data-verdura="'.$Cena['idverdura'].'">
+                                   data-proteina="'.$Cena['idproteina'].'" data-verdura="'.$Cena['idverdura'].'"
+                                   data-cena="'.$Cena['idcena'].'">
 
                                     <i class="glyphicon glyphicon-pencil"></i>
                                 </a> 
@@ -700,7 +723,120 @@
             }
         }
 
+        public function deleteCena($id){
+            try{
+                $SQL = $this->CONECCIONDIETA->prepare("DELETE FROM cena WHERE idcena = ".$id.";");
+                $SQL->execute();
+                echo $id;
+            }catch(PDOException $e){
+                echo '<div class="alert alert-dismissable alert-danger">Ocurrió un error: '.$e->getMessage().'
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                    </div>';
+            }
+        }
 
+        public function insertCenaUno($hora, $tipoCena, $cereal, $lacteo, $usuario){
+            try{
+                $SQL = $this->CONECCIONDIETA->prepare("INSERT INTO 
+                                                        cena (hora_cena, fk_idtipo_cena, fk_idcereal, fk_idlacteo, uuid, fk_idusuarios)
+                                                        VALUES (:hora, :tipoCena, :cereal, :lacteo, :uuid, :usuario)");
+                    $uuid = gen_uuid();
+                    $SQL->bindParam(":hora", $hora);
+                    $SQL->bindParam(":tipoCena", $tipoCena);
+                    $SQL->bindParam(":cereal", $cereal);
+                    $SQL->bindParam(":lacteo", $lacteo);
+                    $SQL->bindParam(":uuid", $uuid);
+                    $SQL->bindParam(":usuario", $usuario);
+                    $SQL->execute();
+
+                    echo "Cena registrado";
+            }catch(PDOException $e){
+                echo '<div class="alert alert-dismissable alert-danger">Ocurrió un error: '.$e->getMessage().'
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                        </div>';
+            }
+        }
+
+        public function updateCenaUno($id, $hora, $tipoCena, $cereal, $lacteo){
+            try{
+                $SQL = $this->CONECCIONDIETA->PREPARE("UPDATE 
+                                                       cena 
+                                                   SET 
+                                                       hora_cena =:hora,
+                                                       fk_idtipo_cena =:tipoCena,
+                                                       fk_idcereal = :cereal,
+                                                       fk_idlacteo = :lacteo
+                                                   WHERE 
+                                                       idcena =:id");
+                
+                $SQL->bindParam(":hora",$hora);
+                $SQL->bindParam(":tipoCena",$tipoCena);
+                $SQL->bindParam(":cereal",$cereal);
+                $SQL->bindParam(":lacteo",$lacteo);
+                $SQL->bindParam(":id", $id);
+                $SQL->execute();
+                                                      
+                    echo "OK";
+                      
+            }catch (PDOException $e) {
+                echo '<div class="alert alert-dismissable alert-danger">Ocurrió un error: '.$e->getMessage().'
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                      </div>';
+            }
+        }
+        
+        public function insertCenaDos($hora, $tipoCena, $cereal, $proteina, $verdura, $usuario){
+            try{
+                $SQL = $this->CONECCIONDIETA->prepare("INSERT INTO 
+                                                        cena (hora_cena, fk_idtipo_cena, fk_idcereal, fk_idverdura, fk_idproteina, uuid, fk_idusuarios)
+                                                        VALUES (:hora, :tipoCena, :cereal, :verdura, :proteina, :uuid, :usuario)");
+                    $uuid = gen_uuid();
+                    $SQL->bindParam(":hora", $hora);
+                    $SQL->bindParam(":tipoCena", $tipoCena);
+                    $SQL->bindParam(":cereal", $cereal);
+                    $SQL->bindParam(":verdura", $verdura);
+                    $SQL->bindParam(":proteina", $proteina);
+                    $SQL->bindParam(":uuid", $uuid);
+                    $SQL->bindParam(":usuario", $usuario);
+                    $SQL->execute();
+
+                    echo "Cena registrado";
+            }catch(PDOException $e){
+                echo '<div class="alert alert-dismissable alert-danger">Ocurrió un error: '.$e->getMessage().'
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                        </div>';
+            }
+        }
+
+        public function updateCenaDos($id, $hora, $tipoCena, $cereal, $proteina, $verdura){
+            try{
+                $SQL = $this->CONECCIONDIETA->PREPARE("UPDATE 
+                                                       cena 
+                                                   SET 
+                                                       hora_cena =:hora,
+                                                       fk_idtipo_cena =:tipoCena,
+                                                       fk_idcereal = :cereal,
+                                                       fk_idproteina = :proteina,
+                                                       fk_idverdura = :verdura
+                                                   WHERE 
+                                                       idcena =:id");
+                
+                $SQL->bindParam(":hora",$hora);
+                $SQL->bindParam(":tipoCena",$tipoCena);
+                $SQL->bindParam(":cereal",$cereal);
+                $SQL->bindParam(":proteina",$proteina);
+                $SQL->bindParam(":verdura",$verdura);
+                $SQL->bindParam(":id", $id);
+                $SQL->execute();
+                                                      
+                    echo "OK";
+                      
+            }catch (PDOException $e) {
+                echo '<div class="alert alert-dismissable alert-danger">Ocurrió un error: '.$e->getMessage().'
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                      </div>';
+            }
+        }
 
         public function mostrarListaColacionDos(){
             try{
@@ -719,7 +855,7 @@
                 $SQL->execute();
                 while($Colacion = $SQL->fetch(PDO::FETCH_ASSOC)){
                     echo '<tr id="'.$Colacion['idcolacion_dos'].'">
-                        <td>'.$Colacion['hora_colacion'].'</td>
+                        <td>'.date("g:i a", strtotime($Colacion['hora_colacion'])).'</td>
                         <td>'.$Colacion['nombre_fruta'].'</td>
                         <td >'.$Colacion['porcion_fruta'].'</td>
                         
@@ -743,6 +879,24 @@
             }
         }
 
+
+        public function selectorTipoCena(){
+            try{               
+                $SQL = $this->CONECCIONDIETA->prepare("SELECT 
+                                                        idtipo_cena, 
+                                                        nombre_cena 
+                                                        FROM tipo_cena");
+
+                $SQL->execute();
+                
+                while($Fruta = $SQL->fetch(PDO::FETCH_ASSOC)){
+                    echo '<option value="'.$Fruta['idtipo_cena'].'">'.$Fruta['nombre_cena'].' </option>';
+                }               
+
+            }catch(PDOException $e){
+
+            }
+        }
         public function deleteColacionDos($id){
             try{
                 $SQL = $this->CONECCIONDIETA->prepare("DELETE FROM colacion_dos WHERE idcolacion_dos = ".$id.";");
@@ -803,7 +957,8 @@
             try{
                 $SQL = $this->CONECCIONDIETA->prepare("
                                                 SELECT
-                                                    DD.iddieta_dia, 
+                                                    DD.iddieta_dia,
+                                                    DD.fecha, 
                                                     D.iddesayuno, 
                                                     D.tipo_desayuno, 
                                                     D.descripcion_desayuno,
@@ -824,9 +979,16 @@
                                                     CO.fk_idverdura,
                                                     CO.fk_idcereal,
                                                     CO.fk_idleguminosa,
-                                                    CD.idcolacion_dos AS hora_colacion_dos,
-                                                    CD.hora_colacion,
-                                                    CD.fruta_idfruta
+                                                    CD.idcolacion_dos,
+                                                    CD.hora_colacion AS hora_colacion_dos,
+                                                    CD.fruta_idfruta,
+                                                    CE.idcena,
+                                                    CE.hora_cena,
+                                                    CE.fk_idtipo_cena,
+                                                    CE.fk_idcereal,
+                                                    CE.fk_idlacteo,
+                                                    CE.fk_idverdura,
+                                                    CE.fk_idproteina
                                                  FROM dieta_dia AS DD 
                                                  INNER JOIN desayuno AS D 
                                                  ON D.iddesayuno = DD.fk_iddesayuno
@@ -838,25 +1000,35 @@
                                                  ON CO.idcomida = DD.fk_idcomida
                                                  INNER JOIN colacion_dos AS CD
                                                  ON CD.idcolacion_dos = DD.fk_idcolacion_dos
+                                                 INNER JOIN cena AS CE
+                                                 ON CE.idcena = DD.fk_idcena
                                                  WHERE DD.fk_iddesayuno = D.iddesayuno
                                                  AND DD.fk_idalmuerzo = A.idalmuerzo 
                                                  AND DD.fk_idcolacion_uno = CU.idcolacion_uno
                                                  AND DD.fk_idcomida = CO.idcomida
                                                  AND DD.fk_idcolacion_dos = CD.idcolacion_dos
+                                                 AND DD.fk_idcena = CE.idcena
                 ");
                 $SQL->execute();
                 while($DietaDia = $SQL->fetch(PDO::FETCH_ASSOC)){
                     echo '<tr id="'.$DietaDia['iddieta_dia'].'">
-                        <td>'.$DietaDia['hora_desayuno'].'</td>
-                        <td>'.$DietaDia['hora_almuerzo'].'</td>
-                        <td >'.$DietaDia['hora_colacion_uno'].'</td>
-                        <td>'.$DietaDia['hora_comida'].'</td>
-                        <td>'.$DietaDia['hora_colacion_dos'].'</td>
-                        
+                        <td>'.date("d-m-Y", strtotime($DietaDia['fecha'])).'</td>
+                        <td>'.date("g:i a", strtotime($DietaDia['hora_desayuno'])).'</td>
+                        <td>'.date("g:i a", strtotime($DietaDia['hora_armuerzo'])).'</td>
+                        <td>'.date("g:i a", strtotime($DietaDia['hora_colacion_uno'])).'</td>
+                        <td>'.date("g:i a", strtotime($DietaDia['hora_comida'])).'</td>
+                        <td>'.date("g:i a", strtotime($DietaDia['hora_colacion_dos'])).'</td>
+                        <td>'.date("g:i a", strtotime($DietaDia['hora_cena'])).'</td>
                         <td> 
                             <div> 
-                                <a href="#" class="editar" 
-                                    <i class="glyphicon glyphicon-pencil"></i>
+                                <a href="#" class="editar" data-iddesayuno="'.$DietaDia['iddesayuno'].'" data-horadesayuno="'.$DietaDia['hora_desayuno'].'"
+                                    data-idalmuerzo="'.$DietaDia['idalmuerzo'].'" data-horaalmuerzo="'.$DietaDia['hora_armuerzo'].'" 
+                                    data-idcolacionuno="'.$DietaDia['idcolacion_uno'].'" data-horacolacionuno="'.$DietaDia['hora_colacion_uno'].'"
+                                    data-idcomida="'.$DietaDia['idcomida'].'" data-horacomida="'.$DietaDia['hora_comida'].'"
+                                    data-idcolaciondos="'.$DietaDia['idcolacion_dos'].'" data-horacolaciondos="'.$DietaDia['hora_colacion_dos'].'"
+                                    data-idcena="'.$DietaDia['idcena'].'" data-horacena="'.$DietaDia['hora_cena'].'"
+                                    data-dietadia="'.$DietaDia['iddieta_dia'].'"
+                                    ><i class="glyphicon glyphicon-pencil"></i>
                                 </a> 
                             </div>
                         </td>
@@ -889,7 +1061,7 @@
                                     <div class="card-header">Desayuno</div>
                                     <div class="card-body card-5-7">
                                         <div class="card-center">
-                                            <p><strong>Hora :</strong> '.$Desayuno['hora_desayuno'].'</p>
+                                            <p><strong>Hora :</strong> '.date("g:i a", strtotime($Desayuno['hora_desayuno'])).'</p>
                                             <p><strong>Alimento :</strong> '.$Desayuno['tipo_desayuno'].'</p>
                                             <p><strong>Descripcion :</strong> '.$Desayuno['descripcion_desayuno'].'</p>
                                         </div>
@@ -949,7 +1121,7 @@
                                     <div class="card-header">Almuerzo '.$Almuerzo['idalmuerzo'].'</div>
                                     <div class="card-body card-5-7">
                                         <div class="card-center">
-                                            <p><strong>Hora :</strong> '.$Almuerzo['hora_armuerzo'].'</p>
+                                            <p><strong>Hora :</strong> '.date("g:i a", strtotime($Almuerzo['hora_armuerzo'])).'</p>
                                             <p><strong>Proteina :</strong> '.$Almuerzo['nombre_proteina'].' '.$Almuerzo['porcion_proteina'].'</p>
                                             <p><strong>Grasa :</strong> '.$Almuerzo['nombre_grasa'].' '.$Almuerzo['porcion_grasa'].'</p>
                                             <p><strong>Verdura :</strong> '.$Almuerzo['nombre_verdura'].' '.$Almuerzo['porcion_verdura'].'</p>
@@ -1017,7 +1189,7 @@
                                     <div class="card-header">Comida '.$Comida['idcomida'].'</div>
                                     <div class="card-body card-5-7">
                                         <div class="card-center">
-                                            <p><strong>Hora :</strong> '.$Comida['hora_comida'].'</p>
+                                            <p><strong>Hora :</strong> '.date("g:i a", strtotime($Comida['hora_comida'])).'</p>
                                             <p><strong>Proteina :</strong> '.$Comida['nombre_proteina'].' '.$Comida['porcion_proteina'].'</p>
                                             <p><strong>Grasa :</strong> '.$Comida['nombre_grasa'].' '.$Comida['porcion_grasa'].'</p>
                                             <p><strong>Verdura :</strong> '.$Comida['nombre_verdura'].' '.$Comida['porcion_verdura'].'</p>
@@ -1034,6 +1206,85 @@
                             </div>
 
                     ';
+                }
+
+            }catch(PDOException $e){
+                echo '<div class="alert alert-dismissable alert-danger">Ocurrió un error: '.$e->getMessage().'
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                      </div>';
+            }
+        }
+
+
+        public function mostrarCenaSeleccion(){
+            try{
+                $SQL = $this->CONECCIONDIETA->prepare("SELECT 
+                                                            CE.idcena,
+                                                            CE.hora_cena,
+                                                            TC.idtipo_cena,
+                                                            C.idcereal,
+                                                            C.nombre_cereal,
+                                                            C.porcion_cereal,
+                                                            L.idlacteo,
+                                                            L.nombre_lacteo,
+                                                            L.porcion_lacteo,
+                                                            V.idverdura,
+                                                            V.nombre_verdura,
+                                                            V.porcion_verdura,
+                                                            P.idproteina,
+                                                            P.nombre_proteina,
+                                                            P.porcion_proteina                                                            
+                                                       FROM
+                                                            cena AS CE
+                                                       LEFT JOIN tipo_cena AS TC ON TC.idtipo_cena = CE.fk_idtipo_cena
+                                                       LEFT JOIN cereal AS C ON C.idcereal = CE.fk_idcereal
+                                                       LEFT JOIN lacteo AS L ON L.idlacteo = CE.fk_idlacteo
+                                                       LEFT JOIN verdura AS V ON V.idverdura = CE.fk_idverdura
+                                                       LEFT JOIN proteina AS P ON P.idproteina = CE.fk_idproteina
+                                                                                                              
+                                                       
+                                                       ");
+                $SQL->execute();
+                
+                while($Cena = $SQL->fetch(PDO::FETCH_ASSOC)){
+                    $lacteo ='';
+                    $verdura = '';
+                    $proteina = '';
+
+                    if($Cena['nombre_lacteo'] != null){
+                      $lacteo = '<p><strong>Lacteo :</strong> '.$Cena['nombre_lacteo'].' '.$Cena['porcion_lacteo'].'</p> ';
+                    }
+                    
+                    if($Cena['nombre_verdura'] != null){
+                        $verdura = '<p><strong>Verdura :</strong> '.$Cena['nombre_verdura'].' '.$Cena['porcion_verdura'].'</p> ';
+                    }
+                    if($Cena['nombre_proteina'] != null){
+                        $proteina = '<p><strong>Proteina :</strong> '.$Cena['nombre_proteina'].' '.$Cena['porcion_proteina'].'</p> ';
+                    }
+
+                    echo '                      
+                            <div class="col-lg-4 col-sm-4" id="'.$Cena['idcena'].'" id="card">
+                                <div class="card card-default">
+                                    <div class="card-header">Cena '.$Cena['idcena'].'</div>
+                                    <div class="card-body card-5-7">
+                                        <div class="card-center">
+                                            <p><strong>Hora :</strong> '.date("g:i a", strtotime($Cena['hora_cena'])).'</p>
+                                            <p><strong>Cereal :</strong> '.$Cena['nombre_cereal'].' '.$Cena['porcion_cereal'].'</p>
+                                            '.$lacteo.'                                            
+                                            '.$verdura.'
+                                            '.$proteina.'
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-right">                                        
+                                        <button class="btn btn-info add-cena" data-idcena="'.$Cena['idcena'].'" data-hora="'.$Cena['hora_cena'].'">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                    ';
+                    
                 }
 
             }catch(PDOException $e){
@@ -1065,7 +1316,7 @@
                                     <div class="card-header">Colacion '.$ColacionUno['idcolacion_uno'].'</div>
                                     <div class="card-body card-5-7">
                                         <div class="card-center">
-                                            <p><strong>Hora :</strong> '.$ColacionUno['hora_colacion'].'</p>
+                                            <p><strong>Hora :</strong> '.date("g:i a", strtotime($ColacionUno['hora_colacion'])).'</p>
                                             <p><strong>Alimento :</strong> '.$ColacionUno['nombre_fruta'].' '.$ColacionUno['porcion_fruta'].'</p>
                                          </div>
                                     </div>
@@ -1089,6 +1340,120 @@
 
 
 
+        public function mostrarColacionDosSeleccion(){
+            try{
+                $SQL = $this->CONECCIONDIETA->prepare("SELECT 
+                                                            CLD.idcolacion_dos,
+                                                            CLD.hora_colacion,
+                                                            F.idfruta,
+                                                            F.nombre_fruta,
+                                                            F.porcion_fruta
+                                                       FROM
+                                                            colacion_dos AS CLD
+                                                        INNER JOIN fruta AS F ON F.idfruta = CLD.fruta_idfruta
+                                                        WHERE CLD.fruta_idfruta = F.idfruta");
+                $SQL->execute();
+
+                while($ColacionDos = $SQL->fetch(PDO::FETCH_ASSOC)){
+                    echo '                      
+                            <div class="col-lg-4 col-sm-4" id="'.$ColacionDos['idcolacion_dos'].'" id="card">
+                                <div class="card card-default">
+                                    <div class="card-header">Colacion '.$ColacionDos['idcolacion_dos'].'</div>
+                                    <div class="card-body card-5-7">
+                                        <div class="card-center">
+                                            <p><strong>Hora :</strong> '.date("g:i a", strtotime($ColacionDos['hora_colacion'])).'</p>
+                                            <p><strong>Alimento :</strong> '.$ColacionDos['nombre_fruta'].' '.$ColacionDos['porcion_fruta'].'</p>
+                                         </div>
+                                    </div>
+                                    <div class="card-footer text-right">                                        
+                                        <button class="btn btn-info add-colacion-dos" data-idcolaciondos="'.$ColacionDos['idcolacion_dos'].'" data-hora="'.$ColacionDos['hora_colacion'].'">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                    ';
+                }
+
+            }catch(PDOException $e){
+                echo '<div class="alert alert-dismissable alert-danger">Ocurrió un error: '.$e->getMessage().'
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                      </div>';
+            }
+        }
+
+
+        public function insertDietaDia($desayuno, $almuerzo, $colacionUno, $comida, $colacionDos, $cena, $usuario){
+            try{
+                $SQL = $this->CONECCIONDIETA->prepare("INSERT INTO 
+                                                        dieta_dia (fk_iddesayuno, fk_idalmuerzo, fk_idcolacion_uno, fk_idcomida, fk_idcolacion_dos, fk_idcena, fk_idusuarios, uuid)
+                                                        VALUES (:desayuno, :almuerzo, :colacionUno, :comida, :colacionDos, :cena, :usuario, :uuid)");
+                    $uuid = gen_uuid();
+                    $SQL->bindParam(":desayuno", $desayuno);
+                    $SQL->bindParam(":almuerzo", $almuerzo);
+                    $SQL->bindParam(":colacionUno", $colacionUno);
+                    $SQL->bindParam(":comida", $comida);
+                    $SQL->bindParam(":colacionDos", $colacionDos);
+                    $SQL->bindParam(":cena", $cena);
+                    $SQL->bindParam(":usuario", $usuario);
+                    $SQL->bindParam(":uuid", $uuid);
+                    $SQL->execute();
+
+                    echo "Dieta registrada";
+            }catch(PDOException $e){
+                echo '<div class="alert alert-dismissable alert-danger">Ocurrió un error: '.$e->getMessage().'
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                        </div>';
+            }
+        }
+
+
+
+        public function updateDietaDia($id, $desayuno, $almuerzo, $colacionUno, $comida, $colacionDos, $cena){
+            try{
+                 $SQL = $this->CONECCIONDIETA->PREPARE("UPDATE 
+                                                        dieta_dia 
+                                                    SET 
+                                                        fk_iddesayuno =:desayuno,
+                                                        fk_idalmuerzo =:almuerzo,
+                                                        fk_idcolacion_uno =:colacionUno,
+                                                        fk_idcomida =:comida,
+                                                        fk_idcolacion_dos =:colacionDos,
+                                                        fk_idcena = :cena
+                                                    WHERE 
+                                                        iddieta_dia =:id");
+                 
+                 $SQL->bindParam(":desayuno",$desayuno);
+                 $SQL->bindParam(":almuerzo",$almuerzo);
+                 $SQL->bindParam(":colacionUno",$colacionUno);
+                 $SQL->bindParam(":comida",$comida);
+                 $SQL->bindParam(":colacionDos", $colacionDos);
+                 $SQL->bindParam(":cena", $cena);
+                 $SQL->bindParam(":id", $id);
+                 $SQL->execute();
+                                                       
+                     echo "OK";
+                       
+             }catch (PDOException $e) {
+                 echo '<div class="alert alert-dismissable alert-danger">Ocurrió un error: '.$e->getMessage().'
+                         <button type="button" class="close" data-dismiss="alert">x</button>
+                       </div>';
+             }
+         }
+        
+
+         public function deleteDietaDia($id){
+            try{
+                $SQL = $this->CONECCIONDIETA->prepare("DELETE FROM dieta_dia WHERE iddieta_dia = ".$id.";");
+                $SQL->execute();
+                echo $id;
+            }catch(PDOException $e){
+                echo '<div class="alert alert-dismissable alert-danger">Ocurrió un error: '.$e->getMessage().'
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                    </div>';
+            }
+        }
 
     }
 
@@ -1113,4 +1478,6 @@
             mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
         );
     }
+
+    
 ?>

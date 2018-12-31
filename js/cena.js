@@ -1,26 +1,57 @@
 $(document).ready(function() {
-    $('#tableCenasUno').DataTable();           
-    $('#tableCenasDos').DataTable();  
-      
+    $('#tableCenasUno').DataTable();             
+    $('#tableCenasDos').DataTable();
+    $('#conTablaCenaDos').hide();
    
+    document.getElementById('tipo-cena-texto').innerText += " "+document.getElementById('cenaUno').innerHTML;
+    $('#cenaDos').click(function(){        
+        $('#conTablaCenaDos').show();
+        $('#conTablaCenaUno').hide();
+        
+        document.getElementById('tipo-cena-texto').innerText = "Cena "+document.getElementById('cenaDos').innerHTML;
+    });
+
+    $('#cenaUno').click(function(){
+        $('#conTablaCenaUno').show();
+        $('#conTablaCenaDos').hide();      
+        
+        document.getElementById('tipo-cena-texto').innerText = "Cena "+document.getElementById('cenaUno').innerHTML;
+    });
+
+
+    $('#btn-insert-modal').click(function(){
+        
+        var tipoCena = document.getElementById('tipo-cena-texto').innerText;
+        
+        if(tipoCena.trim() == "Cena Lacteo-Cereal"){
+            $('#insertModalCenaDos').modal('hide');
+            $('#insertModalCenaUno').modal('show');
+        
+        }else{
+            $('#insertModalCenaUno').modal('hide');
+            $('#insertModalCenaDos').modal('show');
+
+
+        }
+    });
+
      var proteina ;
      var grasa;
      var verdura;
      var cereal;
    
-    $('.eliminar').click(function(){
-         var parent = $(this).parent().attr('id');
-       
+    $('.eliminarCenaUno').click(function(){
+               
          var service = $(this).parent().attr('data');
             console.log(service);
          alertify.confirm('Eliminar', '¿Estas seguro de eliminar el registro? podría alterar otros registros.', function(){
                  var dataString = service;
                  $.ajax({ 
                      type: "POST",
-                     url: "../php/getDieta.php",
+                     url: "../php/getCenaUno.php",
                      data:{ id: dataString, action: "delete" },
                      success: function(e) { 
-                         $("#"+e.trim()).remove();
+                         $("#uno"+e.trim()).remove();
                      }
                  });
                      
@@ -28,91 +59,184 @@ $(document).ready(function() {
          , function(){ });                
      });
 
-     $('#btn-guardarAlmuerzo').click(function(){
+
+     $('.eliminarCenaDos').click(function(){
+               
+        var service = $(this).parent().attr('data');
+           console.log(service);
+        alertify.confirm('Eliminar', '¿Estas seguro de eliminar el registro? podría alterar otros registros.', function(){
+                var dataString = service;
+                $.ajax({ 
+                    type: "POST",
+                    url: "../php/getCenaUno.php",
+                    data:{ id: dataString, action: "delete" },
+                    success: function(e) { 
+                        $("#dos"+e.trim()).remove();
+                    }
+                });
+                    
+            alertify.success('Registro eliminado') }
+        , function(){ });                
+    });
+
+
+     $('#btn-guardarCenaUno').click(function(){
          
-         var horaI = document.getElementById("recipient-hora").value;
-         var proteinaI = document.getElementById("recipient-proteina").value;
-         var grasaI = document.getElementById('recipient-grasa').value;
-         var verduraI = document.getElementById('recipient-verdura').value;
-         var cerealI = document.getElementById('recipient-cereal').value;
+         var horaI = document.getElementById("recipient-hora-cena-uno").value;
+         var tipoCenaI = document.getElementById("recipient-tipo-cena-uno").value;
+         var cerealI = document.getElementById('recipient-cereal-cena-uno').value;
+         var lacteoI = document.getElementById('recipient-lacteo-cena-uno').value;
          var idUsuario = document.getElementById('idUsuario').value;
          var horaFinal = horaI+":00";
          
-        if(horaFinal == null || proteinaI == null || grasaI.length == 0 || verduraI.length == 0 || cerealI.length == 0 ){
+        if(horaFinal == null || tipoCenaI == null || cerealI.length == 0 || lacteoI.length == 0 ){
             alert("Campos vacios...")
         }else{
              $.ajax({ 
                  type: "POST",
-                 url: "../php/getDieta.php",
-                 data:{ hora: horaFinal, proteina: proteinaI, grasa: grasaI, verdura: verduraI, cereal: cerealI, usuario: idUsuario, action: "insert" },
+                 url: "../php/getCenaUno.php",
+                 data:{ hora: horaFinal, tipoCena: tipoCenaI, cereal: cerealI, lacteo: lacteoI, usuario: idUsuario, action: "insertCenaUno" },
                  success: function(e) { 
-                     $('#insertModal').modal('hide');
+                     $('#insertModalCenaUno').modal('hide');
                      alertify.notify(e.trim(), 'success', 5, function(){  console.log('dismissed'); });
-                     window.location.replace('almuerzo.php');
+                     window.location.replace('cena.php');
                  }
              });
         }
      });
      
-     $('.editar').click(function(){
-        var idAlmuerzo = $(this).data('idalmuerzo');
-        var horaAlmuerzo = $(this).data('horaarmuerzo');
-        proteina = $(this).data('proteina');
-        grasa = $(this).data('grasa');
-        verdura = $(this).data('verdura');
-        cereal = $(this).data('cereal');
-
+     $('#btn-guardarCenaDos').click(function(){
+         
+        var horaI = document.getElementById("recipient-hora-cena-dos").value;
+        var tipoCenaI = document.getElementById("recipient-tipo-cena-dos").value;
+        var cerealI = document.getElementById('recipient-cereal-cena-dos').value;
+        var proteinaI = document.getElementById('recipient-proteina-cena-dos').value;
+        var verduraI = document.getElementById('recipient-verdura-cena-dos').value;
+        var idUsuario = document.getElementById('idUsuario').value;
+        var horaFinal = horaI+":00";
         
-        document.getElementById("recipient-hora-editar").value = horaAlmuerzo;
-        var selectProteina = document.getElementById("recipient-proteina-editar");
-        for(var index = 0; index<selectProteina.length; index++){
+       if(horaFinal == null || tipoCenaI == null || cerealI.length == 0 || proteinaI.length == 0 || verduraI.length == 0 ){
+           alert("Campos vacios...")
+       }else{
+            $.ajax({ 
+                type: "POST",
+                url: "../php/getCenaUno.php",
+                data:{ hora: horaFinal, tipoCena: tipoCenaI, cereal: cerealI, proteina: proteinaI, verdura: verduraI, usuario: idUsuario, action: "insertCenaDos" },
+                success: function(e) { 
+                    $('#insertModalCenaDos').modal('hide');
+                    alertify.notify(e.trim(), 'success', 5, function(){  console.log('dismissed'); });
+                    window.location.replace('cena.php');
+                }
+            });
+       }
+    });
+    
+
+
+     $('.editarCenaUno').click(function(){
+        var idCena = $(this).data('cena');
+        var tipoCena = $(this).data('tipocena');
+        var horaCena = $(this).data('horacena');
+        var cereal = $(this).data('cereal');
+        var lacteo = $(this).data('lacteo');
+                
+        document.getElementById("recipient-hora-cena-uno-editar").value = horaCena;
+
+        document.getElementById("recipient-tipo-cena-uno-editar").value = tipoCena;
+        var selectCereal = document.getElementById("recipient-cereal-cena-uno-editar");
+        for(var index = 0; index<selectCereal.length; index++){
+            if(selectCereal[index].value == cereal){
+                selectCereal.selectedIndex = index;
+            }
+        }
+        
+        var selectLacteo = document.getElementById("recipient-lacteo-cena-uno-editar");
+        for(var index = 0; index < selectLacteo.length; index++){
+            if(selectLacteo[index].value == lacteo){
+                selectLacteo.selectedIndex = index;
+            }
+        }
+
+
+        $('#editModalCenaUno').modal('show');
+
+        $('#btn-editarCenaUno').click(function(){
+            
+            var horaI = document.getElementById("recipient-hora-cena-uno-editar").value;
+            var tipoCenaI = document.getElementById("recipient-tipo-cena-uno-editar").value;            
+            var lacteoI = document.getElementById('recipient-lacteo-cena-uno-editar').value;
+            var cerealI = document.getElementById('recipient-cereal-cena-uno-editar').value;
+            var horaFinal = horaI+":00";
+            
+            $.ajax({ 
+                type: "POST",
+                url: "../php/getCenaUno.php",
+                data:{ id: idCena, hora: horaFinal, tipoCena: tipoCenaI, cereal: cerealI, lacteo: lacteoI, action: "editCenaUno" },
+                success: function(e) {                     
+                    $('#editModalCenaUno').modal('hide');
+                    alertify.notify(e.trim()+' se actualizó al catálogo de verduras', 'success', 10, function(){  console.log('dismissed'); });
+                    window.location.replace('cena.php');
+                    
+                }
+            });
+        });  
+        
+     });
+
+     $('.editarCenaDos').click(function(){
+        var idCena = $(this).data('cena');
+        var tipoCena = $(this).data('tipocena');
+        var horaCena = $(this).data('horacena');
+        var cereal = $(this).data('cereal');
+        var proteina = $(this).data('proteina');
+        var verdura = $(this).data('verdura');
+                
+        document.getElementById("recipient-hora-cena-dos-editar").value = horaCena;
+
+        document.getElementById("recipient-tipo-cena-dos-editar").value = tipoCena;
+
+        var selectCereal = document.getElementById("recipient-cereal-cena-dos-editar");
+        for(var index = 0; index<selectCereal.length; index++){
+            if(selectCereal[index].value == cereal){
+                selectCereal.selectedIndex = index;
+            }
+        }
+        
+        var selectProteina = document.getElementById("recipient-proteina-cena-dos-editar");
+        for(var index = 0; index < selectProteina.length; index++){
             if(selectProteina[index].value == proteina){
                 selectProteina.selectedIndex = index;
             }
         }
-        
-        var selectGrasa = document.getElementById("recipient-grasa-editar");
-        for(var index = 0; index < selectGrasa.length; index++){
-            if(selectGrasa[index].value == grasa){
-                selectGrasa.selectedIndex = index;
-            }
-        }
 
-        var selectVerdura = document.getElementById("recipient-verdura-editar");
+
+        var selectVerdura = document.getElementById("recipient-verdura-cena-dos-editar");
         for(var index = 0; index < selectVerdura.length; index++){
             if(selectVerdura[index].value == verdura){
                 selectVerdura.selectedIndex = index;
             }
         }
 
-        var selectCereal = document.getElementById("recipient-cereal-editar");
-        for(var index = 0; index < selectCereal.length; index++){
-            if(selectCereal[index].value == cereal){
-                selectCereal.selectedIndex = index;
-            }
-        };
 
-        $('#editModal').modal('show');
+        $('#editModalCenaDos').modal('show');
 
-        $('#btn-editarAlmuerzo').click(function(){
+        $('#btn-editarCenaDos').click(function(){
             
-            var horaI = document.getElementById("recipient-hora-editar").value;
-            var proteinaI = document.getElementById("recipient-proteina-editar").value;
-            var grasaI = document.getElementById('recipient-grasa-editar').value;
-            var verduraI = document.getElementById('recipient-verdura-editar').value;
-            var cerealI = document.getElementById('recipient-cereal-editar').value;
-            var horaFinal = horaI+":00";
+            var horaI = document.getElementById("recipient-hora-cena-dos-editar").value;
+            var tipoCenaI = document.getElementById("recipient-tipo-cena-dos-editar").value;            
+            var proteinaI = document.getElementById('recipient-proteina-cena-dos-editar').value;
+            var cerealI = document.getElementById('recipient-cereal-cena-dos-editar').value;
+            var verduraI = document.getElementById('recipient-verdura-cena-dos-editar').value;
             
             $.ajax({ 
                 type: "POST",
-                url: "../php/getDieta.php",
-                data:{ id: idAlmuerzo, proteina: proteinaI, grasa: grasaI, verdura: verduraI, cereal: cerealI, hora: horaFinal, action: "edit" },
-                success: function(e) { 
-                    
-                    $('#editModal').modal('hide');
-                   alert(e);
-                    alertify.notify(e.trim()+' se actualizó al catálogo de verduras', 'success', 10, function(){  console.log('dismissed'); });
-                    window.location.replace('almuerzo.php');
+                url: "../php/getCenaUno.php",
+                data:{ id: idCena, hora: horaI, tipoCena: tipoCenaI, cereal: cerealI, proteina: proteinaI, verdura: verduraI, action: "editCenaDos" },
+                success: function(e) {                     
+                    $('#editModalCenaDos').modal('hide');
+                    alert(e);
+                    alertify.notify(e.trim()+' se actualizó al catálogo de cena', 'success', 10, function(){  console.log('dismissed'); });
+                    window.location.replace('cena.php');
                     
                 }
             });

@@ -40,7 +40,7 @@
             echo '<script language = javascript> self.location = "javascript:history.back(-1);" </script>';
             exit;
             }
-        ?>
+        ?>                  
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid">
@@ -54,13 +54,13 @@
                                 <img class="text-icon" src="../img/fruta.png">
                             </div>
                             <div class="col-lg-3">
-                                                
-                                <h1>Dieta por día</h1>  
+                                                  
+                                <h1>Dieta día</h1>  
                             </div>
                             
                         </div>
                         <div class="col-lg-6 page-header">
-                            <h1 class=""> <a type="button" class="btn btn-success col-md-offset-7" data-toggle="modal" data-target="#insertModal" id="btn-guardar" >Crear dieta</a> </h1>
+                            <h1 class=""> <button type="button" class="btn btn-success col-md-offset-7" id="btn-guardar" >Crear dieta</button> </h1>
                         </div>
                     </div>
                     <!-- ... Your content goes here ... --> 
@@ -74,6 +74,7 @@
                                     <th scope="col">Colacion</th>
                                     <th scope="col">Comida</th>
                                     <th scope="col">Colacion</th>
+                                    <th scope="col">Cena</th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                     
@@ -116,7 +117,15 @@
                         </div>                            
                         <br>
                         <div class="input-group">
-                            <p id="input-comida-text" type="text" class="form-control">Selecciona un comida</p>
+                            <p id="input-colacionUno-text" type="text" class="form-control">Selecciona colacion</p>
+                            <input id="input-colacionUno-id" type="hidden">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="button" id="btn-select-colacionUno">Colacion uno</button>
+                                </span>
+                        </div> 
+                        <br>
+                        <div class="input-group">
+                            <p id="input-comida-text" type="text" class="form-control">Selecciona un Comida</p>
                             <input id="input-comida-id" type="hidden">
                                 <span class="input-group-btn">
                                     <button class="btn btn-info" type="button" id="btn-select-comida">Comida</button>
@@ -124,18 +133,25 @@
                         </div> 
                         <br>
                         <div class="input-group">
-                            <p id="input-colacionUno-text" type="text" class="form-control">Selecciona colacion</p>
-                            <input id="input-colacionUno-id" type="hidden">
+                            <p id="input-colacionDos-text" type="text" class="form-control">Selecciona Colacion</p>
+                            <input id="input-colacionDos-id" type="hidden">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-info" type="button" id="btn-select-colacionUno">Colacion uno</button>
+                                    <button class="btn btn-info" type="button" id="btn-select-colacionDos">Colacion Dos</button>
                                 </span>
                         </div> 
-
+                        <br>
+                        <div class="input-group">
+                            <p id="input-cena-text" type="text" class="form-control">Selecciona un Cena</p>
+                            <input id="input-cena-id" type="hidden">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="button" id="btn-select-cena">Cena</button>
+                                </span>
+                        </div> 
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-guardarComida" >Guardar</button>                   
+                    <button type="button" class="btn btn-primary" id="btn-guardarCena" >Guardar</button>                   
                 </div>
             </div>
         </div>  
@@ -149,46 +165,59 @@
                     <h4 class="modal-title" id="exampleModalLabel">Editar comdia</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="recipient-hora-editar" class="control-label">Hora:</label>
-                            <input type="time" class="form-control" min="14:00" max="15:00" step="3600" id="recipient-hora-editar">
+                    <form>                        
+                        <div class="input-group">
+                            <p id="input-desayuno-text-edit" type="text" class="form-control">Selecciona un desayuno</p>
+                            <input id="input-desayuno-id-edit" type="hidden">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="button" id="btn-select-desayuno-edit">Desayuno</button>
+                                </span>
                         </div>
-                        <div class="form-group">
-                            <label for="recipient-grasa-editar" class="control-label">Grasa:</label>
-                            <select id="recipient-grasa-editar" class="form-control">
-                                <?php $ObjectDashboardDieta->seleccionGrasa(); ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-proteina-editar" class="control-label">Proteína:</label>
-                            <select id="recipient-proteina-editar" class="form-control">
-                                <?php $ObjectDashboardDieta->seleccionProteina(); ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-verdura-editar" class="control-label">Verdura:</label>
-                            <select id="recipient-verdura-editar" class="form-control">
-                                <?php $ObjectDashboardDieta->seleccionVerdura(); ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-cereal-editar" class="control-label">Cereal:</label>
-                            <select id="recipient-cereal-editar" class="form-control">
-                                <?php $ObjectDashboardDieta->seleccionCereal(); ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-legumi-editar" class="control-label">Leguminosa:</label>
-                            <select id="recipient-legumi-editar" class="form-control">
-                               <?php $ObjectDashboardDieta->seleccionLeguminosa(); ?> 
-                            </select>
-                        </div>
+                        <br>
+                        <div class="input-group">
+                            <p id="input-almuerzo-text-edit" type="text" class="form-control">Selecciona un almuerzo</p>
+                            <input id="input-almuerzo-id-edit" type="hidden">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="button" id="btn-select-almuerzo-edit">Almuerzo</button>
+                                </span>
+                        </div>                            
+                        <br>
+                        <div class="input-group">
+                            <p id="input-colacionUno-text-edit" type="text" class="form-control">Selecciona colacion</p>
+                            <input id="input-colacionUno-id-edit" type="hidden">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="button" id="btn-select-colacionUno-edit">Colacion uno</button>
+                                </span>
+                        </div> 
+                        <br>
+                        <div class="input-group">
+                            <p id="input-comida-text-edit" type="text" class="form-control">Selecciona un Comida</p>
+                            <input id="input-comida-id-edit" type="hidden">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="button" id="btn-select-comida-edit">Comida</button>
+                                </span>
+                        </div> 
+                        <br>
+                        <div class="input-group">
+                            <p id="input-colacionDos-text-edit" type="text" class="form-control">Selecciona Colacion</p>
+                            <input id="input-colacionDos-id-edit" type="hidden">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="button" id="btn-select-colacionDos-edit">Colacion Dos</button>
+                                </span>
+                        </div> 
+                        <br>
+                        <div class="input-group">
+                            <p id="input-cena-text-edit" type="text" class="form-control">Selecciona un Cena</p>
+                            <input id="input-cena-id-edit" type="hidden">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="button" id="btn-select-cena-edit">Cena</button>
+                                </span>
+                        </div> 
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-editarComida" >Guardar</button>                   
+                    <button type="button" class="btn btn-primary" id="btn-editarDietaDia" >Guardar</button>                   
                 </div>
             </div>
         </div>  
@@ -210,8 +239,7 @@
                     
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-guardarComida" >Guardar</button>                   
+                                       
                 </div>
             </div>
         </div>  
@@ -231,8 +259,7 @@
                     
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-guardarComida" >Guardar</button>                   
+                                      
                 </div>
             </div>
         </div>  
@@ -243,7 +270,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">Almuerzos</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Comidas</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -252,8 +279,7 @@
                     
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-guardarComida" >Guardar</button>                   
+                                       
                 </div>
             </div>
         </div>  
@@ -273,13 +299,51 @@
                     
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-guardarComida" >Guardar</button>                   
+                             
                 </div>
             </div>
         </div>  
     </div>
     
+    <div class="modal fade" id="showColacionDosModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Colaciones</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <?php $ObjectDashboardDieta->mostrarColacionDosSeleccion(); ?> 
+                    </div>                
+                    
+                </div>
+                <div class="modal-footer">
+                                       
+                </div>
+            </div>
+        </div>  
+    </div>
+
+    <div class="modal fade" id="showCenaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Cenas</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <?php $ObjectDashboardDieta->mostrarCenaSeleccion(); ?> 
+                    </div>                
+                    
+                </div>
+                <div class="modal-footer">
+                                       
+                </div>
+            </div>
+        </div>  
+    </div>
 
     <script src="../js/dietaDia.js"></script>
     <!-- jQuery -->

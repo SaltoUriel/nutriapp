@@ -49,20 +49,22 @@
                 <input type="hidden" id="idUsuario" value="<?php @session_start(); echo $_SESSION['idusuarios']; ?>">
                 <div class="row">
                 
-                    <div class="col-lg-12 center-block">
-                        <div class="col-lg-6 page-header">
-                            <div class="col-lg-2 align-baseline">
+                    <div class="row">
+                        <div class="col-lg-12 center-block">
+                            <div class="col-lg-8 page-header">
+                                <div class="col-lg-2 align-baseline">
+                                    
+                                    <img class="text-icon" src="../img/fruta.png">
+                                </div>
+                                <div class="col-lg-8">
+                                                    
+                                    <h1 id="tipo-cena-texto">Cena</h1> 
+                                </div>
                                 
-                                <img class="text-icon" src="../img/fruta.png">
                             </div>
-                            <div class="col-lg-3">
-                                                
-                                <h1>Cena</h1> 
+                            <div class="col-lg-4 page-header">
+                                <h1 class=""> <a type="button" class="btn btn-success col-md-offset-7" id="btn-insert-modal" >Crear cena</a> </h1>
                             </div>
-                            
-                        </div>
-                        <div class="col-lg-6 page-header">
-                            <h1 class=""> <a type="button" class="btn btn-success col-md-offset-7" data-toggle="modal" data-target="#insertModal" id="btn-guardar" >Crear cena</a> </h1>
                         </div>
                     </div>
                     
@@ -80,7 +82,7 @@
                     </div><br>
                     
                     <!-- ... Your content goes here ... --> 
-                    <div class="row ">
+                    <div class="row" id="conTablaCenaUno">
                         <table id="tableCenasUno" class="table table-striped">
                             <thead class="thead-light center">
                                 <tr>
@@ -98,15 +100,15 @@
                         </table>
                     </div>
 
-                    <div class="row ">
+                    <div class="row " id="conTablaCenaDos">
                         <table id="tableCenasDos" class="table table-striped">
                             <thead class="thead-light center">
                                 <tr>
                                     <th scope="col">Hora</th>
                                     <th scope="col">Tipo Cena</th>
+                                    <th scope="col">Cereal</th>
                                     <th scope="col">Proteina</th>
                                     <th scope="col">Verdura</th>
-                                    <th scope="col">Cereal</th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                 </tr>
@@ -123,40 +125,75 @@
         </div>
     </div>
 
-    <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal fade" id="insertModalCenaUno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">Crear almuerzo</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Crear cena lacteo-cereal</h4>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="recipient-hora" class="control-label">Hora:</label>
-                            <input type="time" class="form-control" min="07:00" max="08:00" step="3600" id="recipient-hora">
+                            <label for="recipient-hora-cena-uno" class="control-label">Hora:</label>
+                            <input type="time" class="form-control" min="21:00" max="21:00" step="3600" id="recipient-hora-cena-uno">
                         </div>
                         <div class="form-group">
-                            <label for="recipient-proteina" class="control-label">Proteína:</label>
-                            <select id="recipient-proteina" class="form-control">
+                            <input id="recipient-tipo-cena-uno" type="hidden" value="1">
+                        </div>                        
+                        <div class="form-group">
+                            <label for="recipient-cereal-cena-uno" class="control-label">Cereal:</label>
+                            <select id="recipient-cereal-cena-uno" class="form-control">
+                                <?php $ObjectDashboardDieta->seleccionCereal(); ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-lacteo-cena-uno" class="control-label">Lacteo:</label>
+                            <select id="recipient-lacteo-cena-uno" class="form-control">
+                                <?php $ObjectDashboardDieta->seleccionLacteo(); ?>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btn-guardarCenaUno" >Guardar</button>                   
+                </div>
+            </div>
+        </div>  
+    </div>
+
+    <div class="modal fade" id="insertModalCenaDos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Crear cena proteina-cereal</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-hora-cena-dos" class="control-label">Hora:</label>
+                            <input type="time" class="form-control" min="21:00" max="21:00" step="3600" id="recipient-hora-cena-dos">
+                        </div>
+                        <div class="form-group">
+                        <input id="recipient-tipo-cena-dos" type="hidden" value="2">
+                        </div>                        
+                        <div class="form-group">
+                            <label for="recipient-proteina-cena-dos" class="control-label">Proteína:</label>
+                            <select id="recipient-proteina-cena-dos" class="form-control">
                                 <?php $ObjectDashboardDieta->seleccionProteina(); ?>
                             </select>
-                        </div>
+                        </div>                        
                         <div class="form-group">
-                            <label for="recipient-grasa" class="control-label">Grasa:</label>
-                            <select id="recipient-grasa" class="form-control">
-                                <?php $ObjectDashboardDieta->seleccionGrasa(); ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-verdura" class="control-label">Verdura:</label>
-                            <select id="recipient-verdura" class="form-control">
+                            <label for="recipient-verdura-cena-dos" class="control-label">Verdura:</label>
+                            <select id="recipient-verdura-cena-dos" class="form-control">
                                 <?php $ObjectDashboardDieta->seleccionVerdura(); ?>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="recipient-cereal" class="control-label">Cereal:</label>
-                            <select id="recipient-cereal" class="form-control">
+                            <label for="recipient-cereal-cena-dos" class="control-label">Cereal:</label>
+                            <select id="recipient-cereal-cena-dos" class="form-control">
                                 <?php $ObjectDashboardDieta->seleccionCereal(); ?>
                             </select>
                         </div>
@@ -164,55 +201,90 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-guardarAlmuerzo" >Guardar</button>                   
+                    <button type="button" class="btn btn-primary" id="btn-guardarCenaDos" >Guardar</button>                   
                 </div>
             </div>
         </div>  
     </div>
    
-   <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+   <div class="modal fade" id="editModalCenaUno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">Editar almuerzo</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Editar cena lacteo-cereal</h4>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="recipient-hora-editar" class="control-label">Hora:</label>
-                            <input type="time" class="form-control" min="07:00" max="08:00" step="3600" id="recipient-hora-editar">
+                            <label for="recipient-hora-cena-uno-editar" class="control-label">Hora:</label>
+                            <input type="time" class="form-control" min="21:00" max="21:00" step="3600" id="recipient-hora-cena-uno-editar">
                         </div>
                         <div class="form-group">
-                            <label for="recipient-proteina-editar" class="control-label">Proteína:</label>
-                            <select id="recipient-proteina-editar" class="form-control">
-                                <?php $ObjectDashboardDieta->seleccionProteina(); ?>
-                            </select>
-                        </div>
+                            <input id="recipient-tipo-cena-uno-editar" type="hidden" value="1">
+                        </div>                        
                         <div class="form-group">
-                            <label for="recipient-grasa-editar" class="control-label">Grasa:</label>
-                            <select id="recipient-grasa-editar" class="form-control">
-                                <?php $ObjectDashboardDieta->seleccionGrasa(); ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-verdura-editar" class="control-label">Verdura:</label>
-                            <select id="recipient-verdura-editar" class="form-control">
-                                <?php $ObjectDashboardDieta->seleccionVerdura(); ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-cereal-editar" class="control-label">Cereal:</label>
-                            <select id="recipient-cereal-editar" class="form-control">
+                            <label for="recipient-cereal-cena-uno-editar" class="control-label">Cereal:</label>
+                            <select id="recipient-cereal-cena-uno-editar" class="form-control">
                                 <?php $ObjectDashboardDieta->seleccionCereal(); ?>
                             </select>
                         </div>
-                     
+                        <div class="form-group">
+                            <label for="recipient-lacteo-cena-uno-editar" class="control-label">Lacteo:</label>
+                            <select id="recipient-lacteo-cena-uno-editar" class="form-control">
+                                <?php $ObjectDashboardDieta->seleccionLacteo(); ?>
+                            </select>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-editarAlmuerzo" >Guardar</button>                   
+                    <button type="button" class="btn btn-primary" id="btn-editarCenaUno" >Guardar</button>                   
+                </div>
+            </div>
+        </div>  
+    </div>
+    
+
+    <div class="modal fade" id="editModalCenaDos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Editar cena lacteo-cereal</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-hora-cena-dos-editar" class="control-label">Hora:</label>
+                            <input type="time" class="form-control" min="21:00" max="21:00" step="3600" id="recipient-hora-cena-dos-editar">
+                        </div>
+                        <div class="form-group">
+                        <input id="recipient-tipo-cena-dos-editar" type="hidden" value="2">
+                        </div>                        
+                        <div class="form-group">
+                            <label for="recipient-proteina-cena-dos-editar" class="control-label">Proteína:</label>
+                            <select id="recipient-proteina-cena-dos-editar" class="form-control">
+                                <?php $ObjectDashboardDieta->seleccionProteina(); ?>
+                            </select>
+                        </div>                        
+                        <div class="form-group">
+                            <label for="recipient-verdura-cena-dos-editar" class="control-label">Verdura:</label>
+                            <select id="recipient-verdura-cena-dos-editar" class="form-control">
+                                <?php $ObjectDashboardDieta->seleccionVerdura(); ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-cereal-cena-dos-editar" class="control-label">Cereal:</label>
+                            <select id="recipient-cereal-cena-dos-editar" class="form-control">
+                                <?php $ObjectDashboardDieta->seleccionCereal(); ?>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btn-editarCenaDos" >Guardar</button>                   
                 </div>
             </div>
         </div>  

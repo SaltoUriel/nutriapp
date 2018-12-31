@@ -1,12 +1,8 @@
 $(document).ready(function() {
     $('#tableDietasDia').DataTable();           
      
-     var proteina ;
-     var grasa;
-     var verdura;
-     var cereal;
 
-     $('#btn-select-desayuno').click(function(){        
+    $('#btn-select-desayuno').click(function(){        
         $('#showDesayunoModal').modal('show');       
     });
 
@@ -22,8 +18,54 @@ $(document).ready(function() {
         $('#showColacionModal').modal('show');       
     });
 
+    $('#btn-select-colacionDos').click(function(){        
+        $('#showColacionDosModal').modal('show');       
+    });
 
+    $('#btn-select-cena').click(function(){        
+        $('#showCenaModal').modal('show');       
+    });
    
+    $('#btn-select-desayuno-edit').click(function(){        
+        $('#showDesayunoModal').modal('show');       
+    });
+
+    $('#btn-select-almuerzo-edit').click(function(){        
+        $('#showAlmuerzoModal').modal('show');       
+    });
+
+    $('#btn-select-comida-edit').click(function(){        
+        $('#showComidaModal').modal('show');       
+    });
+
+    $('#btn-select-colacionUno-edit').click(function(){        
+        $('#showColacionModal').modal('show');       
+    });
+
+    $('#btn-select-colacionDos-edit').click(function(){        
+        $('#showColacionDosModal').modal('show');       
+    });
+
+    $('#btn-select-cena-edit').click(function(){        
+        $('#showCenaModal').modal('show');       
+    });
+   
+    $('#btn-guardar').click(function(){
+        document.getElementById('input-desayuno-text').innerHTML = "Agregar un desayuno";
+        document.getElementById('input-desayuno-id').value = 0;
+        document.getElementById('input-almuerzo-text').innerHTML = "Agregar almuerzo";
+        document.getElementById('input-almuerzo-id').value = 0;
+        document.getElementById('input-comida-text').innerHTML = "Agregar comida";
+        document.getElementById('input-comida-id').value = 0;
+        document.getElementById('input-cena-text').innerHTML = "Agregar cena";
+        document.getElementById('input-cena-id').value = 0;
+        document.getElementById('input-colacionUno-text').innerHTML = "Agreagr colacion";
+        document.getElementById('input-colacionUno-id').value = 0;
+        document.getElementById('input-colacionDos-text').innerHTML = "Agregar colacion";
+        document.getElementById('input-colacionDos-id').value = 0;
+        $('#insertModal').modal("show");
+    });
+
 
     $('.add-desayuno').click(function(){
         var idDesayuno = $(this).data('iddesayuno');
@@ -31,50 +73,83 @@ $(document).ready(function() {
         
         document.getElementById('input-desayuno-text').innerHTML = horaDesayuno;
         document.getElementById('input-desayuno-id').value = idDesayuno;
+        document.getElementById('input-desayuno-text-edit').innerHTML = horaDesayuno;
+        document.getElementById('input-desayuno-id-edit').value = idDesayuno;
        $("#showDesayunoModal").modal("hide");
        
     });
 
     $('.add-almuerzo').click(function(){
-        var idDesayuno = $(this).data('idalmuerzo');
-        var horaDesayuno = $(this).data('hora');
+        var idAlmuerzo = $(this).data('idalmuerzo');
+        var horaAlmuerzo = $(this).data('hora');
         
-        document.getElementById('input-almuerzo-text').innerHTML = horaDesayuno;
-        document.getElementById('input-almuerzo-id').value = idDesayuno;
+        document.getElementById('input-almuerzo-text').innerHTML = horaAlmuerzo;
+        document.getElementById('input-almuerzo-id').value = idAlmuerzo;
+        document.getElementById('input-almuerzo-text-edit').innerHTML = horaAlmuerzo;
+        document.getElementById('input-almuerzo-id-edit').value = idAlmuerzo;
        $("#showAlmuerzoModal").modal("hide");
        
     });
 
     $('.add-comida').click(function(){
-        var idDesayuno = $(this).data('idcomida');
-        var horaDesayuno = $(this).data('hora');
+        var idComida = $(this).data('idcomida');
+        var horacomida = $(this).data('hora');
         
-        document.getElementById('input-comida-text').innerHTML = horaDesayuno;
-        document.getElementById('input-comida-id').value = idDesayuno;
+        document.getElementById('input-comida-text').innerHTML = horacomida;
+        document.getElementById('input-comida-id').value = idComida;
+        document.getElementById('input-comida-text-edit').innerHTML = horacomida;
+        document.getElementById('input-comida-id-edit').value = idComida;
        $("#showComidaModal").modal("hide");
+       
+    });
+    
+    $('.add-cena').click(function(){
+        var idCena = $(this).data('idcena');
+        var horaCena = $(this).data('hora');
+        
+        document.getElementById('input-cena-text').innerHTML = horaCena;
+        document.getElementById('input-cena-id').value = idCena;
+        document.getElementById('input-cena-text-edit').innerHTML = horaCena;
+        document.getElementById('input-cena-id-edit').value = idCena;
+       $("#showCenaModal").modal("hide");
        
     });
 
     $(".add-colacion-uno").click(function(){
-        var idDesayuno = $(this).data('idcolacionuno');
-        var horaDesayuno = $(this).data('hora');
+        var idColacionUno = $(this).data('idcolacionuno');
+        var horaColacionUno = $(this).data('hora');
         
-        document.getElementById('input-colacionUno-text').innerHTML = horaDesayuno;
-        document.getElementById('input-colacionUno-id').value = idDesayuno;
+        document.getElementById('input-colacionUno-text').innerHTML = horaColacionUno;
+        document.getElementById('input-colacionUno-id').value = idColacionUno;
+        document.getElementById('input-colacionUno-text-edit').innerHTML = horaColacionUno;
+        document.getElementById('input-colacionUno-id-edit').value = idColacionUno;
        $("#showColacionModal").modal("hide");
        
     });
 
-    $('.eliminar').click(function(){
-         var parent = $(this).parent().attr('id');
+    $(".add-colacion-dos").click(function(){
+        var idcolacionDos = $(this).data('idcolaciondos');
+        var horaColacion = $(this).data('hora');
+        
+        document.getElementById('input-colacionDos-text').innerHTML = horaColacion;
+        document.getElementById('input-colacionDos-id').value = idcolacionDos;
+        document.getElementById('input-colacionDos-text-edit').innerHTML = horaColacion;
+        document.getElementById('input-colacionDos-id-edit').value = idcolacionDos;
+       $("#showColacionDosModal").modal("hide");
        
+    });
+
+
+
+    $('.eliminar').click(function(){
+                
          var service = $(this).parent().attr('data');
             console.log(service);
          alertify.confirm('Eliminar', '¿Estas seguro de eliminar el registro? podría alterar otros registros.', function(){
                  var dataString = service;
                  $.ajax({ 
                      type: "POST",
-                     url: "../php/getComida.php",
+                     url: "../php/getDietaDia.php",
                      data:{ id: dataString, action: "delete" },
                      success: function(e) { 
                          $("#"+e.trim()).remove();
@@ -85,103 +160,88 @@ $(document).ready(function() {
          , function(){ });                
      });
 
-     $('#btn-guardarComida').click(function(){
-         
-         var horaI = document.getElementById("recipient-hora").value;
-         var proteinaI = document.getElementById("recipient-proteina").value;
-         var grasaI = document.getElementById('recipient-grasa').value;
-         var verduraI = document.getElementById('recipient-verdura').value;
-         var cerealI = document.getElementById('recipient-cereal').value;
-         var leguminosaI = document.getElementById('recipient-legumi').value;
+     $('#btn-guardarCena').click(function(){
+         var desayunoI = document.getElementById("input-desayuno-id") .value;
+         var almuerzoI = document.getElementById("input-almuerzo-id").value;
+         var colacionUnoI = document.getElementById("input-colacionUno-id").value;
+         var comidaI = document.getElementById('input-comida-id').value;
+         var colacionDosI = document.getElementById('input-colacionDos-id').value;
+         var cenaI = document.getElementById('input-cena-id').value;
          var idUsuario = document.getElementById('idUsuario').value;
-         var horaFinal = horaI+":00";
          
-        if(horaFinal == null || proteinaI == null || grasaI.length == 0 || verduraI.length == 0 || cerealI.length == 0 ){
+        if(desayunoI == null || almuerzoI == null || cenaI == null || colacionUnoI.length == 0 || comidaI.length == 0 || colacionDosI.length == 0 ){
             alert("Campos vacios...")
         }else{
              $.ajax({ 
                  type: "POST",
-                 url: "../php/getComida.php",
-                 data:{ hora: horaFinal, proteina: proteinaI, grasa: grasaI, verdura: verduraI, cereal: cerealI, leguminosa:leguminosaI, usuario: idUsuario, action: "insert" },
+                 url: "../php/getDietaDia.php",
+                 data:{ desayuno: desayunoI, almuerzo: almuerzoI, colacionUno: colacionUnoI, comida: comidaI, colacionDos: colacionDosI, cena:cenaI, usuario: idUsuario, action: "insert" },
                  success: function(e) { 
                      $('#insertModal').modal('hide');
                      alertify.notify(e.trim(), 'success', 5, function(){  console.log('dismissed'); });
-                     window.location.replace('comida.php');
+                     window.location.replace('dietaDia.php');
                  }
              });
         }
      });
      
      $('.editar').click(function(){
-        var idAlmuerzo = $(this).data('idcomida');
-        var horaAlmuerzo = $(this).data('horacomida');
-        proteina = $(this).data('proteina');
-        grasa = $(this).data('grasa');
-        verdura = $(this).data('verdura');
-        cereal = $(this).data('cereal');
-        leguminosa = $(this).data('leguminosa');
-
-        document.getElementById("recipient-hora-editar").value = horaAlmuerzo;
-        var selectProteina = document.getElementById("recipient-proteina-editar");
-        for(var index = 0; index<selectProteina.length; index++){
-            if(selectProteina[index].value == proteina){
-                selectProteina.selectedIndex = index;
-            }
-        }
+        var desayuno = $(this).data('iddesayuno');
+        var horaDesayuno = $(this).data('horadesayuno');
+        var almuerzo = $(this).data('idalmuerzo');
+        var horaAlmuerzo = $(this).data('horaalmuerzo');
+        var colacionUno = $(this).data('idcolacionuno');
+        var horaColacionUno = $(this).data('horacolacionuno');
+        var comida = $(this).data('idcomida');
+        var horaComida = $(this).data('horacomida');
+        var colacionDos = $(this).data('idcolaciondos');
+        var horaColacionDos = $(this).data('horacolaciondos');
+        var cena = $(this).data('idcena');
+        var horaCena = $(this).data('horacena');
+        var dietaDia = $(this).data('dietadia');
         
-        var selectGrasa = document.getElementById("recipient-grasa-editar");
-        for(var index = 0; index < selectGrasa.length; index++){
-            if(selectGrasa[index].value == grasa){
-                selectGrasa.selectedIndex = index;
-            }
-        }
 
-        var selectVerdura = document.getElementById("recipient-verdura-editar");
-        for(var index = 0; index < selectVerdura.length; index++){
-            if(selectVerdura[index].value == verdura){
-                selectVerdura.selectedIndex = index;
-            }
-        }
+        document.getElementById('input-desayuno-text-edit').innerHTML = horaDesayuno;
+        document.getElementById('input-desayuno-id-edit').value = desayuno;
 
-        var selectCereal = document.getElementById("recipient-cereal-editar");
-        for(var index = 0; index < selectCereal.length; index++){
-            if(selectCereal[index].value == cereal){
-                selectCereal.selectedIndex = index;
-            }
-        }
+        document.getElementById('input-almuerzo-text-edit').innerHTML = horaAlmuerzo;
+        document.getElementById('input-almuerzo-id-edit').value = almuerzo;
 
-        var selectLeguminosa = document.getElementById("recipient-legumi-editar");
-        for(var index = 0; index < selectLeguminosa.length; index++){
-            if(selectLeguminosa[index].value == leguminosa){
-                selectLeguminosa.selectedIndex = index;
-            }
-        }
+        document.getElementById('input-colacionUno-text-edit').innerHTML = horaColacionUno;
+        document.getElementById('input-colacionUno-id-edit').value =  colacionUno;
 
+        document.getElementById('input-comida-text-edit').innerHTML = horaComida;
+        document.getElementById('input-comida-id-edit').value =  comida;
+
+        document.getElementById('input-colacionDos-text-edit').innerHTML = horaColacionDos;
+        document.getElementById('input-colacionDos-id-edit').value =  colacionDos;
+
+        document.getElementById('input-cena-text-edit').innerHTML = horaCena;
+        document.getElementById('input-cena-id-edit').value =  cena;
+
+        
         $('#editModal').modal('show');
 
-        $('#btn-editarComida').click(function(){
+        $('#btn-editarDietaDia').click(function(){
             
-            var horaI = document.getElementById("recipient-hora-editar").value;
-            var proteinaI = document.getElementById("recipient-proteina-editar").value;
-            var grasaI = document.getElementById('recipient-grasa-editar').value;
-            var verduraI = document.getElementById('recipient-verdura-editar').value;
-            var cerealI = document.getElementById('recipient-cereal-editar').value;
-            var leguminosaI = document.getElementById('recipient-legumi-editar').value;
-            var horaFinal = horaI+":00";
-            console.log(idAlmuerzo);
+            var desayunoI = document.getElementById("input-desayuno-id-edit") .value;
+            var almuerzoI = document.getElementById("input-almuerzo-id-edit").value;
+            var colacionUnoI = document.getElementById("input-colacionUno-id-edit").value;
+            var comidaI = document.getElementById('input-comida-id-edit').value;
+            var colacionDosI = document.getElementById('input-colacionDos-id-edit').value;
+            var cenaI = document.getElementById('input-cena-id-edit').value;
+            
             $.ajax({ 
                 type: "POST",
-                url: "../php/getComida.php",
-                data:{ id: idAlmuerzo, proteina: proteinaI, grasa: grasaI, verdura: verduraI, cereal: cerealI, leguminosa: leguminosaI, hora: horaFinal, action: "edit" },
+                url: "../php/getDietaDia.php",
+                data:{id: dietaDia, desayuno: desayunoI, almuerzo: almuerzoI, colacionUno: colacionUnoI, comida: comidaI, colacionDos: colacionDosI, cena:cenaI, action: "edit" },
                 success: function(e) { 
-                    
-                    $('#editModal').modal('hide');
-                    alert(e);
-                    alertify.notify(e.trim()+' se actualizó al catálogo de verduras', 'success', 10, function(){  console.log('dismissed'); });
-                    window.location.replace('comida.php');
-                    
+                    $('#insertModal').modal('hide');
+                    alertify.notify(e.trim(), 'success', 5, function(){  console.log('dismissed'); });
+                    window.location.replace('dietaDia.php');
                 }
             });
+           
         });  
         
      });

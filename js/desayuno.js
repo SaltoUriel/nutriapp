@@ -45,11 +45,11 @@ $(document).ready(function() {
 
      $('.editar').click(function(){
         
-        var alimentoI = $(this).parent().attr('tipoDesayuno');
-        var idI = $(this).parent().attr('id');
-        var descripcionI = $(this).parent().attr('descripcion');
-        var horaI = $(this).parent().attr('hora');
-                 
+        var alimentoI = $(this).data('tipodesayuno');
+        var idI = $(this).data('id');
+        var descripcionI = $(this).data('descripcion');
+        var horaI = $(this).data('horadesayuno');
+           
          $('#recipient-name-edit').val(alimentoI);
          $('#recipient-porcion-edit').val(descripcionI);
          $('#recipient-hora-edit').val(horaI);
@@ -61,13 +61,12 @@ $(document).ready(function() {
             var alimentoI = document.getElementById("recipient-name-edit").value;
             var descripcionI = document.getElementById('recipient-porcion-edit').value;
             var horaI = document.getElementById('recipient-hora-edit').value;
-             
+            
                  $.ajax({ 
                      type: "POST",
                      url: "../php/getDesayuno.php",
-                     data:{ id: idI, alimento: alimentoI, descripcion: descripcionI, hora: horaI, action: "edit" },
+                     data:{ id: idI, alimento: alimentoI, descripcion: descripcionI, hora: horaI, action: "update" },
                      success: function(e) { 
-                         
                          $('#editModal').modal('hide');
                          alertify.notify(e.trim()+' se actualizó al catálogo de cereales', 'success', 10, function(){  console.log('dismissed'); });
                          window.location.replace('desayuno.php');
