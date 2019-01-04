@@ -441,6 +441,7 @@
             case "collationOne" : $nombreSubModulo = "Colacion Uno"; break;
             case "collationTwo" : $nombreSubModulo = "Colacion Dos"; break;
             case "dietday" : $nombreSubModulo = "Dieta por Día"; break;
+            case "monday" : $nombreSubModulo = "Lunes"; break;
         }
         return $nombreSubModulo;
     }

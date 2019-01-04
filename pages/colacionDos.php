@@ -100,7 +100,7 @@
                     <form>
                         <div class="form-group">
                             <label for="recipient-hora" class="control-label">Hora:</label>
-                            <input type="time" class="form-control" min="10:00" max="11:00" step="3600" id="recipient-hora">
+                            <input type="time" class="form-control" min="17:00" max="17:30" step="3600" id="recipient-hora">
                         </div>
                         <div class="form-group">
                             <label for="recipient-fruta" class="control-label">Fruta:</label>

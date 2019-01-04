@@ -8,6 +8,8 @@
 
 	include_once 'dashBoard.class.php';
 	include_once 'dashBoardDieta.class.php';
+	include_once 'dashBoardDietaSemana.class.php';
 	$ObjectDashboard = new dashBoard($handler);
 	$ObjectDashboardDieta = new dashBoardDieta($handler);
+	$ObjectDashboardDietaSemana = new dashBoardDietaSemana($handler);
 ?>

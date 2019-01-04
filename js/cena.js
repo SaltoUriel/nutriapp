@@ -81,7 +81,7 @@ $(document).ready(function() {
 
 
      $('#btn-guardarCenaUno').click(function(){
-         
+         console.log("deekjj");
          var horaI = document.getElementById("recipient-hora-cena-uno").value;
          var tipoCenaI = document.getElementById("recipient-tipo-cena-uno").value;
          var cerealI = document.getElementById('recipient-cereal-cena-uno').value;
@@ -98,6 +98,7 @@ $(document).ready(function() {
                  data:{ hora: horaFinal, tipoCena: tipoCenaI, cereal: cerealI, lacteo: lacteoI, usuario: idUsuario, action: "insertCenaUno" },
                  success: function(e) { 
                      $('#insertModalCenaUno').modal('hide');
+                     alert(e);
                      alertify.notify(e.trim(), 'success', 5, function(){  console.log('dismissed'); });
                      window.location.replace('cena.php');
                  }
