@@ -442,6 +442,12 @@
             case "collationTwo" : $nombreSubModulo = "Colacion Dos"; break;
             case "dietday" : $nombreSubModulo = "Dieta por Día"; break;
             case "monday" : $nombreSubModulo = "Lunes"; break;
+            case "tuesday" : $nombreSubModulo = "Martes"; break;
+            case "wednesday" : $nombreSubModulo = "Miercoles"; break;
+            case "thursday" : $nombreSubModulo = "Jueves"; break;
+            case "friday" : $nombreSubModulo = "Viernes"; break;
+            case "saturday" : $nombreSubModulo = "Sábado"; break;
+            case "sunday" : $nombreSubModulo = "Domingo"; break;
         }
         return $nombreSubModulo;
     }
