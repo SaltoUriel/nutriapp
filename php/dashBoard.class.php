@@ -434,6 +434,7 @@
             case "proteins" : $nombreSubModulo = "Proteínas"; break;
             case "vegetables" : $nombreSubModulo = "Verduras"; break;
             case "cereal" : $nombreSubModulo = "Cereal"; break;
+            case "diet" : $nombreSubModulo = "Tipo de Dieta"; break;
             case "lunch" : $nombreSubModulo = "Almuerzo"; break;
             case "breakfast" : $nombreSubModulo = "Desayuno"; break;
             case "meal" : $nombreSubModulo = "Comida"; break;
@@ -448,6 +449,7 @@
             case "friday" : $nombreSubModulo = "Viernes"; break;
             case "saturday" : $nombreSubModulo = "Sábado"; break;
             case "sunday" : $nombreSubModulo = "Domingo"; break;
+            case "week" : $nombreSubModulo = "Semana"; break;
         }
         return $nombreSubModulo;
     }

@@ -55,28 +55,28 @@
                             <div class="col-lg-3">
                                                 
                                 <h1>Frutas</h1>  
-                                
+                               
                             </div>
                             
                         </div>
                         <div class="col-lg-6 page-header">
-                            <h1 class=""> <a type="button" class="btn btn-success col-md-offset-7" data-toggle="modal" data-target="#insertModal" id="btn-guardar" >Agregar fruta</a> </h1>
+                            <h1 class=""> <a type="button" class="btn btn-success col-md-offset-7" data-toggle="modal" data-target="#insertModal" id="btn-guardar" >Crear dieta</a> </h1>
                         </div>
                     </div>
                     <!-- ... Your content goes here ... --> 
                     <div class="row ">
-                        <table id="tableFrutas" class="table table-striped">
+                        <table id="tableTipoDieta" class="table table-striped">
                             <thead class="thead-light center">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Nombre</th>
-                                    <th scope="col">Porción</th>
+                                    <th scope="col">Semanas</th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $ObjectDashboard->mostrarListaFrutas(); ?>
+                                <?php $ObjectDashboardDietaSemana->mostrarListaTipoDietas(); ?>
                             </tbody>
                         </table>
                     </div>
@@ -91,23 +91,23 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">Agregar fruta</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Agregar dieta</h4>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="recipient-name" class="control-label">Nombre:</label>
-                            <input type="text" class="form-control" id="recipient-name" required>
+                            <label for="recipient-nombre" class="control-label">Nombre:</label>
+                            <input type="text" class="form-control" id="recipient-nombre" required>
                         </div>
                         <div class="form-group">
-                            <label for="recipient-porcion" class="control-label">Porción:</label>
-                            <input type="text" class="form-control" id="recipient-porcion" required>
+                            <label for="recipient-semanas" class="control-label">Semanas:</label>
+                            <input type="number" class="form-control" id="recipient-semanas" required>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-guardarFruta" >Guardar</button>                   
+                    <button type="button" class="btn btn-primary" id="btn-guardarDieta" >Guardar</button>                   
                 </div>
             </div>
         </div>  
@@ -118,23 +118,23 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">Editar fruta</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Editar dieta</h4>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="recipient-name" class="control-label">Nombre:</label>
-                            <input type="text" class="form-control" id="recipient-nameEdit" required>
+                            <label for="recipient-nombre-edit" class="control-label">Nombre:</label>
+                            <input type="text" class="form-control" id="recipient-nombre-edit" required>
                         </div>
                         <div class="form-group">
-                            <label for="recipient-porcion" class="control-label">Porción:</label>
-                            <input type="text" class="form-control" id="recipient-porcionEdit" required>
+                            <label for="recipient-semanas-edit" class="control-label">Porción:</label>
+                            <input type="number" class="form-control" id="recipient-semanas-edit" required>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-editarFruta" >Guardar</button>                    
+                    <button type="button" class="btn btn-primary" id="btn-editarDieta" >Guardar</button>                    
                 </div>
             </div>
         </div>  
@@ -142,7 +142,7 @@
     
 
 
-    <script src="../js/fruta.js"></script>
+    <script src="../js/dieta.js"></script>
     <!-- jQuery -->
     <script src="../js/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
