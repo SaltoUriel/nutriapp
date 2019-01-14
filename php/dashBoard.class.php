@@ -11,75 +11,82 @@
         
         public function login($datos){
            try{
-                $SQL = $this->CONECCION->prepare("SELECT idusuarios, fk_idroles FROM usuarios WHERE correo = :icorreo AND contrasena = :icontrasena AND activo = 1");
+                $SQL = $this->CONECCION->prepare("SELECT idusuarios, fk_idroles, contrasena FROM usuarios WHERE correo = :icorreo AND activo = 1");
                 $SQL->bindParam(":icorreo", $datos['correo']);
-                $SQL->bindParam(":icontrasena", $datos['contrasena']);
                 $SQL->execute();
                
                 if($SQL->rowCount() > 0){
                     $Usuario = $SQL->fetch(PDO::FETCH_ASSOC);
-                    print_r($Usuario);
-                    if($Usuario['fk_idroles'] == 1){
-                        $SQLADMIN= $this->CONECCION->prepare("SELECT * FROM usuarios WHERE idusuarios = :idusuarios");
-                        $SQLADMIN->bindParam(":idusuarios", $Usuario['idusuarios']);
-                        $SQLADMIN->execute();		
-                        $Admin = $SQLADMIN->fetch(PDO::FETCH_ASSOC);			
-                        @session_start();					
-                        $_SESSION['username'] = $Admin['nombre_usuario'];
-                        $_SESSION['idusuarios'] = $Admin['idusuarios'];	
-                        $_SESSION['codigo'] = '';
+
+                    if(password_verify($datos['contrasena'], $Usuario['contrasena'])){
+                        print_r($Usuario);
+                        if($Usuario['fk_idroles'] == 1){
+                            $SQLADMIN= $this->CONECCION->prepare("SELECT * FROM usuarios WHERE idusuarios = :idusuarios");
+                            $SQLADMIN->bindParam(":idusuarios", $Usuario['idusuarios']);
+                            $SQLADMIN->execute();		
+                            $Admin = $SQLADMIN->fetch(PDO::FETCH_ASSOC);			
+                            @session_start();					
+                            $_SESSION['username'] = $Admin['nombre_usuario'];
+                            $_SESSION['idusuarios'] = $Admin['idusuarios'];	
+                            $_SESSION['codigo'] = '';
+                        }
+    
+                        $SQLMODULOS = $this->CONECCION->prepare("
+                                        SELECT DISTINCT 
+                                            modulo.idmodulo, 
+                                            modulo.nombre_modulo 
+                                        FROM permisos 
+                                        INNER JOIN modulo 
+                                        ON permisos.fk_idmodulo = modulo.idmodulo 
+                                        WHERE permisos.fk_idroles = :idRol 
+                                        AND permisos.activo = 1 
+                                        AND modulo.activo = 1");
+                        $SQLMODULOS->bindParam(":idRol", $Usuario['fk_idroles']);
+                        $SQLMODULOS->execute();
+    
+                        $SQLSUBMODULOS = $this->CONECCION->prepare("SELECT	
+                                                submodulo.nombre_submodulo, 
+                                                submodulo.ruta
+                                            FROM permisos 
+                                            INNER JOIN submodulo 
+                                            ON permisos.fk_idsubmodulo = submodulo.idsubmodulo 
+                                            WHERE permisos.fk_idroles = :idRol 
+                                            AND submodulo.activo = 1 
+                                            AND permisos.activo = 1 
+                                            AND permisos.fk_idmodulo = :idModulo");
+                        $NAVBAR_ = "";
+                        $PERMISOS = array();
+    
+                        while($Modulos = $SQLMODULOS->fetch(PDO::FETCH_ASSOC)) {
+                            $arraySubmodulos = array(
+                                ':idRol'=>$Usuario['fk_idroles'],
+                                ':idModulo'=>$Modulos['idmodulo']
+                            );
+    
+                            $SQLSUBMODULOS->execute($arraySubmodulos);
+                            $NAVBAR_ .= '<li><a href="#">'. utf8_encode(mostrarNombresModulo($Modulos['nombre_modulo'])).'<span class="fa arrow"></span></a>';
+                            $NAVBAR_ .= '<ul class="nav nav-second-level">';
+                            while($submodulos = $SQLSUBMODULOS->fetch(PDO::FETCH_ASSOC)) {
+                                if($submodulos['ruta'] != 'actividadextras' && $submodulos['ruta'] != 'calificaralumno') {							
+                                    $NAVBAR_ .= '<li><a href="'.$submodulos['ruta'].'.php">'.utf8_encode(mostrarNombresSubModulo($submodulos['nombre_submodulo'])).'</a></li>';
+                                }
+                                array_push($PERMISOS, $submodulos['ruta']);
+                            }
+                            $NAVBAR_ .= '</ul></li>';
+                        }
+                        $_SESSION['navbar'] = $NAVBAR_;
+                        $_SESSION['permisos'] = $PERMISOS;
+                        header('Location: pages/');
+                    }else{                      
+                            echo '<div class="alert alert-dismissable alert-danger">Lo sentimos, usuario y/o contraseña no coinciden!
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                            </div>';
                     }
-
-                    $SQLMODULOS = $this->CONECCION->prepare("
-									SELECT DISTINCT 
-										modulo.idmodulo, 
-									    modulo.nombre_modulo 
-									FROM permisos 
-									INNER JOIN modulo 
-									ON permisos.fk_idmodulo = modulo.idmodulo 
-									WHERE permisos.fk_idroles = :idRol 
-									AND permisos.activo = 1 
-									AND modulo.activo = 1");
-				$SQLMODULOS->bindParam(":idRol", $Usuario['fk_idroles']);
-				$SQLMODULOS->execute();
-
-                $SQLSUBMODULOS = $this->CONECCION->prepare("SELECT	
-										submodulo.nombre_submodulo, 
-									    submodulo.ruta
-									FROM permisos 
-									INNER JOIN submodulo 
-									ON permisos.fk_idsubmodulo = submodulo.idsubmodulo 
-									WHERE permisos.fk_idroles = :idRol 
-									AND submodulo.activo = 1 
-									AND permisos.activo = 1 
-                                    AND permisos.fk_idmodulo = :idModulo");
-                $NAVBAR_ = "";
-				$PERMISOS = array();
-
-				while($Modulos = $SQLMODULOS->fetch(PDO::FETCH_ASSOC)) {
-					$arraySubmodulos = array(
-						':idRol'=>$Usuario['fk_idroles'],
-						':idModulo'=>$Modulos['idmodulo']
-                    );
-
-                    $SQLSUBMODULOS->execute($arraySubmodulos);
-					$NAVBAR_ .= '<li><a href="#">'. utf8_encode(mostrarNombresModulo($Modulos['nombre_modulo'])).'<span class="fa arrow"></span></a>';
-					$NAVBAR_ .= '<ul class="nav nav-second-level">';
-					while($submodulos = $SQLSUBMODULOS->fetch(PDO::FETCH_ASSOC)) {
-						if($submodulos['ruta'] != 'actividadextras' && $submodulos['ruta'] != 'calificaralumno') {							
-							$NAVBAR_ .= '<li><a href="'.$submodulos['ruta'].'.php">'.utf8_encode(mostrarNombresSubModulo($submodulos['nombre_submodulo'])).'</a></li>';
-						}
-						array_push($PERMISOS, $submodulos['ruta']);
-					}
-					$NAVBAR_ .= '</ul></li>';
-                }
-                $_SESSION['navbar'] = $NAVBAR_;
-				$_SESSION['permisos'] = $PERMISOS;
-                header('Location: pages/');
+                   
                 }else {
-                    echo '<div class="alert alert-dismissable alert-danger">Lo sentimos, usuario y/o contraseña no coinciden!
-                                <button type="button" class="close" data-dismiss="alert">x</button>
-                               </div>';
+                    echo '<div class="alert alert-dismissable alert-danger">Lo sentimos, usuario no existe!
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                   </div>';
                 }	
 
                
@@ -367,6 +374,23 @@
             }                
             
         }
+
+        public function updatePass($id, $contrasena){
+            try{
+                 $passSifrada = password_hash($contrasena, PASSWORD_DEFAULT, array("cost"=>15));
+                 $SQL = $this->CONECCION->PREPARE("UPDATE usuarios SET contrasena =:contrasena WHERE idusuarios =:id");
+                 $SQL->bindParam(":contrasena",$passSifrada);
+                 $SQL->bindParam(":id",$id);
+                 $SQL->execute();
+                 echo "Ok";                
+                       
+             }catch (PDOException $e) {
+                 echo '<div class="alert alert-dismissable alert-danger">Ocurrió un error: '.$e->getMessage().'
+                         <button type="button" class="close" data-dismiss="alert">x</button>
+                       </div>';
+             }
+         }
+
         public function logout() {
             @session_start();
             @session_unset($_SESSION['username']);
@@ -450,6 +474,7 @@
             case "saturday" : $nombreSubModulo = "Sábado"; break;
             case "sunday" : $nombreSubModulo = "Domingo"; break;
             case "week" : $nombreSubModulo = "Semana"; break;
+            case "password" : $nombreSubModulo = "Contraseña"; break;
         }
         return $nombreSubModulo;
     }

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Startmin - Bootstrap Admin Theme</title>
+        <title>Login NutriApp</title>
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- MetisMenu CSS -->
@@ -76,7 +76,7 @@
                 <input type="email" id="email" name="email" required="required"/>
                 </div>
                 <div class="form-group">
-                <button type="submit">Registar</button>
+                <button id="btn-nuevo-usuario"type="submit">Registar</button>
                 </div>
             </form>
             </div>
