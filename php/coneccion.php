@@ -9,7 +9,9 @@
 	include_once 'dashBoard.class.php';
 	include_once 'dashBoardDieta.class.php';
 	include_once 'dashBoardDietaSemana.class.php';
+	include_once 'dashBoardConfi.class.php';
 	$ObjectDashboard = new dashBoard($handler);
 	$ObjectDashboardDieta = new dashBoardDieta($handler);
 	$ObjectDashboardDietaSemana = new dashBoardDietaSemana($handler);
+	$ObjectDashboardConfiguracion = new dashBoardConfi($handler);
 ?>

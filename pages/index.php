@@ -14,7 +14,7 @@
 
     <link href="../css/navbar.css" rel="stylesheet">
     <!-- Bootstrap Core CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    
     <!-- MetisMenu CSS -->
     <link href="../css/metisMenu.min.css" rel="stylesheet">
     <!-- Timeline CSS -->

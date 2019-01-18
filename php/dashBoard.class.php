@@ -475,6 +475,7 @@
             case "sunday" : $nombreSubModulo = "Domingo"; break;
             case "week" : $nombreSubModulo = "Semana"; break;
             case "password" : $nombreSubModulo = "Contraseña"; break;
+            case "roles" : $nombreSubModulo = "Roles"; break;
         }
         return $nombreSubModulo;
     }
