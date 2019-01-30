@@ -6,15 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   	<meta name="tipo_contenido"  content="text/html;" http-equiv="content-type" charset="utf-8">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    
     <title>Roles</title>
 
     <link href="../css/swicht.css" rel="stylesheet">
-    <!-- Bootstrap Core CSS -->
     
     <!-- MetisMenu CSS -->
     <link href="../css/metisMenu.min.css" rel="stylesheet">
@@ -55,7 +53,6 @@
                         </div>                        
                     </div>
                     
-                    
                     <!-- ... Your content goes here ... --> 
                     <div class="row">
                     <div class="col-lg-12">
@@ -89,6 +86,7 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Nivel</th>
                                     <th scope="col">Fecha Creacion</th>
+                                    <th scope="col">Perimisos</th>
                                     <th scope="col">Activo</th>
                                 </tr>
                             </thead>
@@ -103,6 +101,45 @@
         </div>
     </div>
 
+
+    <div class="modal fade" id="showPermisos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Permisos</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" aria-label="...">
+                            </span>
+                            <input type="text" class="form-control" aria-label="...">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" aria-label="...">
+                            </span>
+                            <input type="text" class="form-control" aria-label="...">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <input type="checkbox" aria-label="...">
+                            </span>
+                            <input type="text" class="form-control" aria-label="...">
+                        </div>
+                    </form>                          
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btn-editarMartes" >Guardar</button>                    
+                </div>
+            </div>
+        </div>  
+    </div>
     <script src="../js/roles.js"></script>
     <!-- jQuery -->
     <script src="../js/jquery.min.js"></script>

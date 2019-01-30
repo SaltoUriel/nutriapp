@@ -38,7 +38,10 @@
                                         FROM permisos 
                                         INNER JOIN modulo 
                                         ON permisos.fk_idmodulo = modulo.idmodulo 
+                                        INNER JOIN roles
+                                        ON permisos.fk_idroles = roles.idroles
                                         WHERE permisos.fk_idroles = :idRol 
+                                        AND roles.activo = 1
                                         AND permisos.activo = 1 
                                         AND modulo.activo = 1");
                         $SQLMODULOS->bindParam(":idRol", $Usuario['fk_idroles']);
@@ -62,9 +65,17 @@
                                 ':idRol'=>$Usuario['fk_idroles'],
                                 ':idModulo'=>$Modulos['idmodulo']
                             );
-    
+                            $icono;
+                            switch($Modulos['nombre_modulo']){
+                                case "catalogs": $icono = "catalogo"; break;
+                                case "conf" : $icono = "confi"; break;
+                                case "diet" : $icono = "dietas"; break;
+                                default: $icono = ""; break;
+                            }
+
+
                             $SQLSUBMODULOS->execute($arraySubmodulos);
-                            $NAVBAR_ .= '<li><a href="#">'. utf8_encode(mostrarNombresModulo($Modulos['nombre_modulo'])).'<span class="fa arrow"></span></a>';
+                            $NAVBAR_ .= '<li><a href="#"> <img src="../img/'.$icono.'.png">'. utf8_encode(" ".mostrarNombresModulo($Modulos['nombre_modulo'])).'<span class="fa arrow"></span></a>';
                             $NAVBAR_ .= '<ul class="nav nav-second-level">';
                             while($submodulos = $SQLSUBMODULOS->fetch(PDO::FETCH_ASSOC)) {
                                 if($submodulos['ruta'] != 'actividadextras' && $submodulos['ruta'] != 'calificaralumno') {							

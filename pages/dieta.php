@@ -8,7 +8,7 @@
    
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <title>Index</title>
+    <title>Tipos de Dieta</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -50,11 +50,11 @@
                         <div class="col-lg-6 page-header">
                             <div class="col-lg-2 align-baseline">
                                 
-                                <img class="text-icon" src="../img/fruta.png">
+                                <img class="text-icon" src="../img/opciones.png">
                             </div>
                             <div class="col-lg-3">
                                                 
-                                <h1>Frutas</h1>  
+                                <h1>Dietas</h1>  
                                
                             </div>
                             

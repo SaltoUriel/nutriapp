@@ -25,9 +25,15 @@
                                 <th scope="row">'.$Roles['idroles'].'</th>
                                 <td>'.$Roles['nivel_rol'].'</td>
                                 <td>'.$Roles['fecha_alta'].'</td>
+                                
+                                <td> 
+                                    <a href="#" class="btn-permisos" data-rol="'.$Roles['idroles'].'"> 
+                                        <i class="glyphicon glyphicon-eye-open"></i>
+                                    </a> 
+                                </td>
                                 <td class="left">                                
                                     <div class="material-switch pull-center activo-edit" data-idrol="'.$Roles['idroles'].'">
-                                        <input id="'.$Roles['idroles'].'" value="'.$Roles['activo'].'" '.$cheked.' name="'.$Roles['idroles'].'"  type="checkbox"/>
+                                        <input id="I'.$Roles['idroles'].'" value="'.$Roles['activo'].'" '.$cheked.' name="'.$Roles['idroles'].'"  type="checkbox"/>
                                         <label for="'.$Roles['idroles'].'" class="label-success"></label>
                                     </div>                                
                                 </td>
