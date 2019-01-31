@@ -5,24 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   	<meta name="tipo_contenido"  content="text/html;" http-equiv="content-type" charset="utf-8">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+   
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    
-    
     <title>Roles</title>
 
     <link href="../css/swicht.css" rel="stylesheet">
-    
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
     <link href="../css/metisMenu.min.css" rel="stylesheet">
     <!-- Timeline CSS -->
-    <link href="../css/timeline.css" rel="stylesheet"> 
+    <link href="../css/timeline.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="../css/startmin.css" rel="stylesheet">
     <!-- Morris Charts CSS -->
     <link href="../css/morris.css" rel="stylesheet">
-    
     <!-- Custom Fonts -->
     <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../css/alertify.min.css" rel="stylesheet">
@@ -47,57 +45,55 @@
         <div id="page-wrapper">
             <div class="container-fluid">
                 <input type="hidden" id="idUsuario" value="<?php @session_start(); echo $_SESSION['idusuarios']; ?>">
-                    <div class="row">                                    
-                        <div class="page-header">
-                            <h1 class=""><i class="glyphicon glyphicon-check"></i> Roles</h1>            
-                        </div>                        
-                    </div>
-                    
-                    <!-- ... Your content goes here ... --> 
-                    <div class="row">
+                <div class="row">                                    
+                    <div class="page-header">
+                        <h1 class=""><i class="glyphicon glyphicon-check"></i> Roles</h1>            
+                    </div>                        
+                </div>
+                
+                <!-- ... Your content goes here ... --> 
+                <div class="row">
                     <div class="col-lg-12">
-                            <form>                                
-                                <div class="form-group col-lg-3">
-                                    <label for="nivel-rol" class="control-label">Nivel Rol</label>
-                                    <input type="text" class="form-control" id="nivel-rol" required>
-                                </div>                            
-                            
-                                <div class="form-group col-lg-2">
-                                    <label for="activo-rol-new" class="control-label">Activo</label>                                                        
-                                    <div class="material-switch pull-center">
-                                        <input id="activo-rol-new" name="activo-rol-new" type="checkbox"/>
-                                        <label for="activo-rol-new" class="label-success"></label>
-                                    </div>  
-                                </div>
-                            
-                                <div class="form-group col-lg-2">
-                                    <label for="btn-add" class="control-label"></label>
-                                    <a type="button" class="form-control btn btn-info" id="btn-add" required>
-                                     <i class="glyphicon glyphicon-plus"></i>
-                                    </a>
-                                </div>
-                            </form>    
-                        </div>
-                    </div>
-                    <div class="row ">                        
-                        <table id="tableRoles" class="table table-striped">
-                            <thead class="thead-light center">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Nivel</th>
-                                    <th scope="col">Fecha Creacion</th>
-                                    <th scope="col">Perimisos</th>
-                                    <th scope="col">Activo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $ObjectDashboardConfiguracion->showRolesLista(); ?>
-                            </tbody>
-                        </table>
+                        <form>                                
+                            <div class="form-group col-lg-3">
+                                <label for="nivel-rol" class="control-label">Nivel Rol</label>
+                                <input type="text" class="form-control" id="nivel-rol" required>
+                            </div>                            
+                        
+                            <div class="form-group col-lg-2">
+                                <label for="activo-rol-new" class="control-label">Activo</label>                                                        
+                                <div class="material-switch pull-center">
+                                    <input id="activo-rol-new" name="activo-rol-new" type="checkbox"/>
+                                    <label for="activo-rol-new" class="label-success"></label>
+                                </div>  
+                            </div>
+                        
+                            <div class="form-group col-lg-2">
+                                <label for="btn-add" class="control-label"></label>
+                                <a type="button" class="form-control btn btn-info" id="btn-add" required>
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                </a>
+                            </div>
+                        </form>    
                     </div>
                 </div>
+                <div class="row ">                        
+                    <table id="tableRoles" class="table table-striped">
+                        <thead class="thead-light center">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nivel</th>
+                                <th scope="col">Fecha Creacion</th>
+                                <th scope="col">Perimisos</th>
+                                <th scope="col">Activo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $ObjectDashboardConfiguracion->showRolesLista(); ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
         </div>
     </div>
 
@@ -115,21 +111,21 @@
                             <span class="input-group-addon">
                                 <input type="checkbox" aria-label="...">
                             </span>
-                            <input type="text" class="form-control" aria-label="...">
+                            <p type="text" class="form-control" aria-label="..." >Catalogos</p>
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <input type="checkbox" aria-label="...">
                             </span>
-                            <input type="text" class="form-control" aria-label="...">
+                            <p type="text" class="form-control" aria-label="..." >Configuración</p>
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <input type="checkbox" aria-label="...">
                             </span>
-                            <input type="text" class="form-control" aria-label="...">
+                            <p type="text" class="form-control" aria-label="..." >Dietas</p>
                         </div>
                     </form>                          
                 </div>
@@ -140,6 +136,9 @@
             </div>
         </div>  
     </div>
+    
+
+
     <script src="../js/roles.js"></script>
     <!-- jQuery -->
     <script src="../js/jquery.min.js"></script>
@@ -147,7 +146,6 @@
     <script src="../js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../js/metisMenu.min.js"></script>
-    <script src="../js/material.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../js/startmin.js"></script>
     <script src="../js/dataTables/jquery.dataTables.min.js"></script>
