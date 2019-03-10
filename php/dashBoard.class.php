@@ -11,7 +11,8 @@
         
         public function login($datos){
            try{
-                $SQL = $this->CONECCION->prepare("SELECT idusuarios, fk_idroles, contrasena FROM usuarios WHERE correo = :icorreo AND activo = 1");
+                $SQL = $this->CONECCION->prepare("SELECT idusuarios, fk_idroles, contrasena 
+                                                        FROM usuarios WHERE correo = :icorreo AND activo = 1");
                 $SQL->bindParam(":icorreo", $datos['correo']);
                 $SQL->execute();
                
@@ -487,6 +488,7 @@
             case "week" : $nombreSubModulo = "Semana"; break;
             case "password" : $nombreSubModulo = "Contraseña"; break;
             case "roles" : $nombreSubModulo = "Roles"; break;
+            
         }
         return $nombreSubModulo;
     }

@@ -204,6 +204,8 @@ $(document).ready(function() {
          var tipoDietaI = document.getElementById('input-tipo-dieta-id').value;
          var idUsuario = document.getElementById('idUsuario').value;
          
+         var gif = "<i class='fas fa-sync fa-spin'></i>";
+
         if(domingoI == null || tipoDietaI == null || lunesI == null || martesI == null || miercolesI == null || juevesI.length == 0 || viernesI.length == 0 || sabadoI.length == 0 ){
             alert("Campos vacios...")
         }else{
@@ -211,8 +213,11 @@ $(document).ready(function() {
                  type: "POST",
                  url: "../php/getSemana.php",
                  data:{ lunes: lunesI, martes: martesI, miercoles: miercolesI, jueves: juevesI, viernes: viernesI, sabado:sabadoI, domingo:domingoI, dieta: tipoDietaI, usuario: idUsuario, action: "insert" },
+                 beforeSend: function(){
+                    $("#btn-guardarSemana").text("");
+                    $("#btn-guardarSemana").append(gif);
+                  },
                  success: function(e) { 
-                     $('#insertModal').modal('hide');
                      alertify.notify(e.trim(), 'success', 5, function(){  console.log('dismissed'); });
                      window.location.replace('semana.php');
                  }

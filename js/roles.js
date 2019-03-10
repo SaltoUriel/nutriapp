@@ -1,45 +1,66 @@
 $(document).ready(function() {
-    
+   $('#btn-add').attr('disabled', true);
+   var rol;
+   var nuevoRol = $('#nivel-rol');
    $('#tableRoles').DataTable({
         "bLengthChange": false
     });        
    
+    function validaNivelRol(){
+        var rolTexto = nuevoRol.val();
+        if(rolTexto.length > 0){
+            $('#btn-add').attr('disabled', false);         
+        }else{
+            $('#btn-add').attr('disabled', true);
+        }
+    }
 
-    $('.btn-permisos').click(function(){
-       $('#showPermisos').modal("show");
+    nuevoRol.keyup(function(){
+        validaNivelRol();
     });
 
-
+    $('.btn-permisos').click(function(){
+        rol = $(this).data('rol');
+        
+       $('#showPermisos').modal("show");
+    });
 
 
     $('.activo-edit').click(function(){
         var idrol = $(this).data('idrol');
         
         var activoI = document.getElementById("I"+idrol).value;
+        var registro = "I"+idrol;
        if( activoI == 1 ) {
-        console.log(activoI);    
-        activoI = 0; 
+            activoI = 0; 
         }else{
-            console.log(activoI);
             activoI = 1; 
         }
-        console.log(activoI);
         $.ajax({ 
             type: "POST",
             url: "../php/getRoles.php",
             data:{ rol: idrol, activo: activoI, action:"update" },
             success: function(e) {
-                alert(e);
-                window.location.replace('roles.php');
+                if(e.trim() === "Ok"){
+                    if(activoI == 1){
+                        document.getElementById(registro).checked = true;
+                        document.getElementById(registro).value = 1;
+                    }else{
+                        document.getElementById(registro).checked = false;
+                        document.getElementById(registro).value = 0;
+                    }
+                }
             }
         });    
 
     });
     
+    
+
    $('#btn-add').click(function(){
        var nivelRol =  document.getElementById("nivel-rol").value;
        var activoI;
-       if( $('#someSwitchOptionSuccess').is(':checked') ) {
+       if( $('#activo-rol-new').is(':checked') ) {
             activoI = 1; 
         }else{
             activoI = 0; 
@@ -49,6 +70,9 @@ $(document).ready(function() {
             type: "POST",
             url: "../php/getRoles.php",
             data:{ nivel: nivelRol, activo: activoI, action:"insert" },
+            beforeSend: function(){
+                
+            },
             success: function(e) { 
                 $("#"+e.trim()).remove();
                 window.location.replace('roles.php');

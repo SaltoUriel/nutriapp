@@ -37,6 +37,8 @@ $(document).ready(function() {
          var idUsuario = document.getElementById('idUsuario').value;
          var horaFinal = horaI+":00";
          
+         var gif = "<i class='fas fa-sync fa-spin'></i>";
+
         if(horaFinal == null || proteinaI == null || grasaI.length == 0 || verduraI.length == 0 || cerealI.length == 0 ){
             alert("Campos vacios...")
         }else{
@@ -44,8 +46,11 @@ $(document).ready(function() {
                  type: "POST",
                  url: "../php/getDieta.php",
                  data:{ hora: horaFinal, proteina: proteinaI, grasa: grasaI, verdura: verduraI, cereal: cerealI, usuario: idUsuario, action: "insert" },
+                 beforeSend: function(){
+                    $("#btn-guardarAlmuerzo").text("");
+                    $("#btn-guardarAlmuerzo").append(gif);
+                  },
                  success: function(e) { 
-                     $('#insertModal').modal('hide');
                      alertify.notify(e.trim(), 'success', 5, function(){  console.log('dismissed'); });
                      window.location.replace('almuerzo.php');
                  }
