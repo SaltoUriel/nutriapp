@@ -65,17 +65,18 @@
                                         AND modulo.activo = 1");
                         $SQLMODULOS->bindParam(":idRol", $idRol);
                         $SQLMODULOS->execute();
-                
+                                
+             
                 while($Modulo = $SQLMODULOS->fetch(PDO::FETCH_ASSOC)) {
                     //$cheked = $Roles['activo'] == 1 ? "checked" : "";
                     
-                   echo  '<div class="input-group">
-                                    <span class="input-group-addon">
-                                        <input id="'.$Modulo['idmodulo'].'" checked type="checkbox" aria-label="...">
-                                    </span>
-                                    <p type="text" class="form-control" aria-label="..." >'.$Modulo['nombre_modulo'].'</p>
-                                </div>
-                                <br>
+                    echo'<div class="input-group">
+                                        <span class="input-group-addon">
+                                            <input id="'.$Modulo['idmodulo'].'" checked type="checkbox" aria-label="...">
+                                        </span>
+                                        <p type="text" class="form-control" aria-label="..." >'.mostrarNombresModulo($Modulo['nombre_modulo']).'</p>
+                                    </div>
+                                    <br>
                                 ';
     
                 }
@@ -99,16 +100,18 @@
                         while($Modulo_Sin_Permisos = $SQLMODULOS_SIN_PERMISOS->fetch(PDO::FETCH_ASSOC)) {
                             //$cheked = $Roles['activo'] == 1 ? "checked" : "";
                             
-                           echo '<div class="input-group">
-                                            <span class="input-group-addon">
-                                                <input id="'.$Modulo_Sin_Permisos['idmodulo'].'" type="checkbox" aria-label="...">
-                                            </span>
-                                            <p type="text" class="form-control" aria-label="..." >'.$Modulo_Sin_Permisos['nombre_modulo'].'</p>
-                                        </div>
-                                        <br>
+                            echo  '<div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input data-modulo="'.$Modulo_Sin_Permisos['idmodulo'].'" id="'.$Modulo_Sin_Permisos['idmodulo'].'" type="checkbox" aria-label="...">
+                                                </span>
+                                                <p type="text" class="form-control" aria-label="..." >'.mostrarNombresModulo($Modulo_Sin_Permisos['nombre_modulo']).'</p>
+                                            </div>
+                                            <br>
                                         ';
             
                         }
+                        
+                        
             }catch(PDOException $e){
                 echo '<div class="alert alert-dismissable alert-danger">Ocurrió un error: '.$e->getMessage().'
                 <button type="button" class="close" data-dismiss="alert">x</button>

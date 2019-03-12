@@ -417,10 +417,12 @@
     
         public function checkSession() {
             @session_start();
-            if(!empty($_SESSION['idusuarios']) && !empty($_SESSION['username']))
+            if(!empty($_SESSION['idusuarios']) && !empty($_SESSION['username'])){
                 return true;
+            }else{
+                return false;
+            }
     
-            return false;
         }
     
         public function isUserAvaliable($username){

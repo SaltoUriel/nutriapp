@@ -1,6 +1,6 @@
 $(document).ready(function() {
    $('#btn-add').attr('disabled', true);
-   var rol;
+   
    var nuevoRol = $('#nivel-rol');
    $('#tableRoles').DataTable({
         "bLengthChange": false
@@ -19,11 +19,7 @@ $(document).ready(function() {
         validaNivelRol();
     });
 
-    $('.btn-permisos').click(function(){
-        rol = $(this).data('rol');
-        
-       $('#showPermisos').modal("show");
-    });
+   
 
 
     $('.activo-edit').click(function(){
@@ -78,6 +74,30 @@ $(document).ready(function() {
                 window.location.replace('roles.php');
             }
         });    
+    });
+
+    $('.btn-permisos').click(function(){
+        var idRol = $(this).data('rol');
+        $('#formPermisos').empty();
+
+        $.ajax({
+            type: "POST",
+            url:"../php/getRoles.php",
+            data: {rol: idRol, action: "showPermisos" },
+            success: function(e){
+                $('#formPermisos').append(e);
+                $('#showPermisos').modal("show");
+            }
+
+        });
+
+    });
+
+    $('#btn-guardarRoles').click(function(){
+        $('#showPermisos').modal("hide");
+
+
+        
     });
 });
 

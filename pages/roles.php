@@ -105,14 +105,12 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="exampleModalLabel">Permisos</h4>
                 </div>
-                <div class="modal-body">
-                    <form>
-                       <?php $ObjectDashboardConfiguracion->showPermisosLista(1);  ?>
-                    </form>                          
+                <div class="modal-body" id="permisoShow">
+                <form id="formPermisos"> </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-editarMartes" >Guardar</button>                    
+                    <button type="button" class="btn btn-primary" id="btn-guardarRoles" >Guardar</button>                    
                 </div>
             </div>
         </div>  
