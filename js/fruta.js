@@ -14,7 +14,6 @@ $(document).ready(function() {
                      url: "../php/getCrud.php",
                      data:{ id: dataString, nombreTabla: "fruta", action: "delete" },
                      success: function(e) { 
-                         alert(e);
                          $("#"+e.trim()).remove();
                      }
                  });

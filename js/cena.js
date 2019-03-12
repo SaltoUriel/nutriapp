@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('#tableCenasUno').DataTable();             
     $('#tableCenasDos').DataTable();
     $('#conTablaCenaDos').hide();
-   
+    var gif = "<i class='fas fa-sync fa-spin'></i>";
     document.getElementById('tipo-cena-texto').innerText += " "+document.getElementById('cenaUno').innerHTML;
     $('#cenaDos').click(function(){        
         $('#conTablaCenaDos').show();
@@ -96,9 +96,13 @@ $(document).ready(function() {
                  type: "POST",
                  url: "../php/getCenaUno.php",
                  data:{ hora: horaFinal, tipoCena: tipoCenaI, cereal: cerealI, lacteo: lacteoI, usuario: idUsuario, action: "insertCenaUno" },
+                 beforeSend: function(){
+                    $("#btn-guardarCenaUno").text("");
+                    $("#btn-guardarCenaUno").append(gif);
+                },
                  success: function(e) { 
                      $('#insertModalCenaUno').modal('hide');
-                     alert(e);
+                     
                      alertify.notify(e.trim(), 'success', 5, function(){  console.log('dismissed'); });
                      window.location.replace('cena.php');
                  }
@@ -123,6 +127,10 @@ $(document).ready(function() {
                 type: "POST",
                 url: "../php/getCenaUno.php",
                 data:{ hora: horaFinal, tipoCena: tipoCenaI, cereal: cerealI, proteina: proteinaI, verdura: verduraI, usuario: idUsuario, action: "insertCenaDos" },
+                beforeSend: function(){
+                    $("#btn-guardarCenaDos").text("");
+                    $("#btn-guardarCenaDos").append(gif);
+                },
                 success: function(e) { 
                     $('#insertModalCenaDos').modal('hide');
                     alertify.notify(e.trim(), 'success', 5, function(){  console.log('dismissed'); });
@@ -173,6 +181,10 @@ $(document).ready(function() {
                 type: "POST",
                 url: "../php/getCenaUno.php",
                 data:{ id: idCena, hora: horaFinal, tipoCena: tipoCenaI, cereal: cerealI, lacteo: lacteoI, action: "editCenaUno" },
+                beforeSend: function(){
+                    $("#btn-editarCenaUno").text("");
+                    $("#btn-editarCenaUno").append(gif);
+                },
                 success: function(e) {                     
                     $('#editModalCenaUno').modal('hide');
                     alertify.notify(e.trim()+' se actualizó al catálogo de verduras', 'success', 10, function(){  console.log('dismissed'); });
@@ -233,9 +245,12 @@ $(document).ready(function() {
                 type: "POST",
                 url: "../php/getCenaUno.php",
                 data:{ id: idCena, hora: horaI, tipoCena: tipoCenaI, cereal: cerealI, proteina: proteinaI, verdura: verduraI, action: "editCenaDos" },
+                beforeSend: function(){
+                    $("#btn-editarCenaDos").text("");
+                    $("#btn-editarCenaDos").append(gif);
+                },
                 success: function(e) {                     
                     $('#editModalCenaDos').modal('hide');
-                    alert(e);
                     alertify.notify(e.trim()+' se actualizó al catálogo de cena', 'success', 10, function(){  console.log('dismissed'); });
                     window.location.replace('cena.php');
                     

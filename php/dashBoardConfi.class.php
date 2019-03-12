@@ -180,6 +180,13 @@
                                 <td>'.$Usuarios['correo'].'</td>
                                 <td>'.$Usuarios['nivel_rol'].'</td>
                                
+                                <td> 
+                                    <a href="#" class="btn-editUsuario" data-usuario="'.$Usuarios['idusuarios'].'" data-nombre="'.$Usuarios['nombre_usuario'].'"
+                                        data-correo="'.$Usuarios['correo'].'" data-rol="'.$Usuarios['idroles'].'"> 
+                                        <i class="glyphicon glyphicon-eye-open"></i>
+                                    </a> 
+                                </td>
+
                                 <td class="left">                                
                                     <div class="material-switch pull-center activo-edit" data-idusuario="'.$Usuarios['idusuarios'].'">
                                         <input id="I'.$Usuarios['idusuarios'].'" value="'.$Usuarios['activo'].'" '.$cheked.' name="'.$Usuarios['idusuarios'].'"  type="checkbox"/>
@@ -244,6 +251,29 @@
 
                 $SQL = $this->CONECCION->PREPARE("UPDATE usuarios SET activo =:activoI WHERE idusuarios =:id");
                 $SQL->bindParam(":activoI", $activo);
+                $SQL->bindParam(":id", $usuario);
+                $SQL->execute();
+                echo "Ok";
+
+            }catch(PDOException $e){
+                echo '<div class="alert alert-dismissable alert-danger">Ocurrió un error: '.$e->getMessage().'
+                <button type="button" class="close" data-dismiss="alert">x</button>
+              </div>';
+            }
+        }
+
+        public function updateUsuario($usuario, $nombre, $correo, $rol){
+            try{
+
+                $SQL = $this->CONECCION->PREPARE("UPDATE usuarios 
+                                                     SET 
+                                                        nombre_usuario =:nombreI,
+                                                        correo  =:correoI,
+                                                        fk_idroles =:rolI 
+                                                    WHERE idusuarios =:id");
+                $SQL->bindParam(":nombreI", $nombre);
+                $SQL->bindParam(":correoI", $correo);
+                $SQL->bindParam(":rolI", $rol);
                 $SQL->bindParam(":id", $usuario);
                 $SQL->execute();
                 echo "Ok";

@@ -18,7 +18,7 @@ $(document).ready(function() {
 
         var gif = "<i class='fas fa-sync fa-spin'></i>";
         var contrasenaInput = "123456";
-         console.log(nombreInput);
+         
         $.ajax({ 
              type: "POST",
              url: "../php/getUsuario.php",
@@ -62,6 +62,45 @@ $(document).ready(function() {
         });     
 
     });
+
+    $('.btn-editUsuario').click(function(){
+        var idUsuario = $(this).data('usuario');
+        var nombreUsuario = $(this).data('nombre');
+        var correo = $(this).data('correo');
+        var rol = $(this).data('rol');
+
+        $('#recipient-name-editar').val(nombreUsuario);
+        $('#recipient-correo-editar').val(correo);
+        console.log(rol);
+        var selectedRol = document.getElementById("recipient-rol-editar");
+        for(var index = 0; index<selectedRol.length; index++){
+            if(selectedRol[index].value == rol){
+                selectedRol.selectedIndex = index;
+            }
+        }
+        $('#editModal').modal('show');
+
+        $('#btn-editUsuario').click(function(){
+            var nombreInput = $('#recipient-name-editar').val();
+            var correoInput = $('#recipient-correo-editar').val();
+            var rolInput = $('#recipient-rol-editar').val();
+            var gif = "<i class='fas fa-sync fa-spin'></i>";
+            $.ajax({ 
+                type: "POST",
+                url: "../php/getUsuario.php",
+                data:{ usuario:idUsuario, nombre: nombreInput, correo: correoInput, rol:rolInput, action:"update" },
+                beforeSend: function(){
+                  $("#btn-editUsuario").text("");
+                  $("#btn-editUsuario").append(gif);
+                },
+                success: function(e) { 
+                    window.location.replace('usuarios.php');
+                }
+            });    
+        });
+
+    });
     
 });
+
 

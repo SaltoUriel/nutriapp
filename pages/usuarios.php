@@ -75,6 +75,7 @@
                                 <th scope="col">Usuario</th>
                                 <th scope="col">Correo</th>
                                 <th scope="col">Rol</th>
+                                <th scope="col"></th>
                                 <th scope="col">Activo</th>
                             </tr>
                         </thead>
@@ -116,6 +117,39 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-primary" id="btn-addUsuario" >Guardar</button>                   
+                </div>
+            </div>
+        </div>  
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Editar Usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name-editar" class="control-label">Nombre:</label>
+                            <input type="text" class="form-control" id="recipient-name-editar" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-correo-editar" class="control-label">Correo Electronico:</label>
+                            <input type="text" class="form-control" id="recipient-correo-editar" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-rol-editar" class="control-label">Rol:</label>
+                            <select id="recipient-rol-editar" class="form-control">
+                                <?php $ObjectDashboardConfiguracion->seleccionRol(); ?>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btn-editUsuario" >Guardar</button>                   
                 </div>
             </div>
         </div>  

@@ -49,19 +49,19 @@
                 <div class="row">
                 
                     <div class="col-lg-12 center-block">
-                        <div class="col-lg-6 page-header">
+                        <div class="col-lg-9 page-header">
                             <div class="col-lg-2 align-baseline">
                                 
-                                <img class="text-icon" src="../img/fruta.png">
+                                <img class="text-icon" src="../img/opciones.png">
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-6">
                                                   
-                                <h1>Dieta día</h1>  
+                                <h1>Dieta semana</h1>  
                
                             </div>
                             
                         </div>
-                        <div class="col-lg-6 page-header">
+                        <div class="col-lg-3 page-header">
                             <h1 class=""> <button type="button" class="btn btn-success col-md-offset-7" id="btn-guardar" >Crear dieta</button> </h1>
                         </div>
                     </div>

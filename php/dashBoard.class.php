@@ -21,7 +21,7 @@
 
                     if(password_verify($datos['contrasena'], $Usuario['contrasena'])){
                         print_r($Usuario);
-                        if($Usuario['fk_idroles'] == 1){
+                        
                             $SQLADMIN= $this->CONECCION->prepare("SELECT * FROM usuarios WHERE idusuarios = :idusuarios");
                             $SQLADMIN->bindParam(":idusuarios", $Usuario['idusuarios']);
                             $SQLADMIN->execute();		
@@ -30,7 +30,7 @@
                             $_SESSION['username'] = $Admin['nombre_usuario'];
                             $_SESSION['idusuarios'] = $Admin['idusuarios'];	
                             $_SESSION['codigo'] = '';
-                        }
+                        
     
                         $SQLMODULOS = $this->CONECCION->prepare("
                                         SELECT DISTINCT 

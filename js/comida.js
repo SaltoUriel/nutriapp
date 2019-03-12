@@ -37,7 +37,7 @@ $(document).ready(function() {
          var leguminosaI = document.getElementById('recipient-legumi').value;
          var idUsuario = document.getElementById('idUsuario').value;
          var horaFinal = horaI+":00";
-         
+         var gif = "<i class='fas fa-sync fa-spin'></i>";
         if(horaFinal == null || proteinaI == null || grasaI.length == 0 || verduraI.length == 0 || cerealI.length == 0 ){
             alert("Campos vacios...")
         }else{
@@ -45,6 +45,10 @@ $(document).ready(function() {
                  type: "POST",
                  url: "../php/getComida.php",
                  data:{ hora: horaFinal, proteina: proteinaI, grasa: grasaI, verdura: verduraI, cereal: cerealI, leguminosa:leguminosaI, usuario: idUsuario, action: "insert" },
+                 beforeSend: function(){
+                    $("#btn-guardarComida").text("");
+                    $("#btn-guardarComida").append(gif);
+                  },
                  success: function(e) { 
                      $('#insertModal').modal('hide');
                      alertify.notify(e.trim(), 'success', 5, function(){  console.log('dismissed'); });
@@ -62,7 +66,7 @@ $(document).ready(function() {
         verdura = $(this).data('verdura');
         cereal = $(this).data('cereal');
         leguminosa = $(this).data('leguminosa');
-
+        var gif = "<i class='fas fa-sync fa-spin'></i>";
         document.getElementById("recipient-hora-editar").value = horaAlmuerzo;
         var selectProteina = document.getElementById("recipient-proteina-editar");
         for(var index = 0; index<selectProteina.length; index++){
@@ -110,15 +114,17 @@ $(document).ready(function() {
             var cerealI = document.getElementById('recipient-cereal-editar').value;
             var leguminosaI = document.getElementById('recipient-legumi-editar').value;
             var horaFinal = horaI+":00";
-            console.log(idAlmuerzo);
+            var gif = "<i class='fas fa-sync fa-spin'></i>";
             $.ajax({ 
                 type: "POST",
                 url: "../php/getComida.php",
                 data:{ id: idAlmuerzo, proteina: proteinaI, grasa: grasaI, verdura: verduraI, cereal: cerealI, leguminosa: leguminosaI, hora: horaFinal, action: "edit" },
+                beforeSend: function(){
+                    $("#btn-editarComida").text("");
+                    $("#btn-editarComida").append(gif);
+                },
                 success: function(e) { 
-                    
                     $('#editModal').modal('hide');
-                    alert(e);
                     alertify.notify(e.trim()+' se actualizó al catálogo de verduras', 'success', 10, function(){  console.log('dismissed'); });
                     window.location.replace('comida.php');
                     

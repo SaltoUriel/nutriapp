@@ -51,7 +51,7 @@
                         <div class="col-lg-6 page-header">
                             <div class="col-lg-2 align-baseline">
                                 
-                                <img class="text-icon" src="../img/fruta.png">
+                                <img class="text-icon" src="../img/dia.png">
                             </div>
                             <div class="col-lg-3">                                                
                                 <h1>Lunes</h1>                                 

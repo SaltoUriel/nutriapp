@@ -96,8 +96,8 @@ $(document).ready(function() {
     $('#btn-guardarRoles').click(function(){
         $('#showPermisos').modal("hide");
 
-
         
+
     });
 });
 

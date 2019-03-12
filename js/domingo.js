@@ -25,6 +25,8 @@ $(document).ready(function() {
     $('.add-dieta-dia').click(function(){
         var idDieta = $(this).data('iddietadia'); 
         document.getElementById('input-dieta-dia-text').innerHTML = "Dieta seleccionada";
+        document.getElementById('input-dieta-dia-text').style.backgroundColor="green";
+        document.getElementById('input-dieta-dia-text').style.color="white";
         document.getElementById('input-dieta-dia-id').value = idDieta;
         
         document.getElementById('input-dieta-dia-text-edit').innerHTML = "Dieta seleccionada";

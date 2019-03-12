@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#tableDietasDia').DataTable();           
      
-
+    var gif = "<i class='fas fa-sync fa-spin'></i>";
     $('#btn-select-desayuno').click(function(){        
         $('#showDesayunoModal').modal('show');       
     });
@@ -176,6 +176,10 @@ $(document).ready(function() {
                  type: "POST",
                  url: "../php/getDietaDia.php",
                  data:{ desayuno: desayunoI, almuerzo: almuerzoI, colacionUno: colacionUnoI, comida: comidaI, colacionDos: colacionDosI, cena:cenaI, usuario: idUsuario, action: "insert" },
+                 beforeSend: function(){
+                    $("#btn-guardarCena").text("");
+                    $("#btn-guardarCena").append(gif);
+                },
                  success: function(e) { 
                      $('#insertModal').modal('hide');
                      alertify.notify(e.trim(), 'success', 5, function(){  console.log('dismissed'); });
@@ -235,6 +239,10 @@ $(document).ready(function() {
                 type: "POST",
                 url: "../php/getDietaDia.php",
                 data:{id: dietaDia, desayuno: desayunoI, almuerzo: almuerzoI, colacionUno: colacionUnoI, comida: comidaI, colacionDos: colacionDosI, cena:cenaI, action: "edit" },
+                beforeSend: function(){
+                    $("#btn-editarDietaDia").text("");
+                    $("#btn-editarDietaDia").append(gif);
+                },
                 success: function(e) { 
                     $('#insertModal').modal('hide');
                     alertify.notify(e.trim(), 'success', 5, function(){  console.log('dismissed'); });

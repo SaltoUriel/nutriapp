@@ -8,6 +8,7 @@
    
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <title>Dieta día</title>
 
     <!-- Bootstrap Core CSS -->
@@ -48,18 +49,18 @@
                 <div class="row">
                 
                     <div class="col-lg-12 center-block">
-                        <div class="col-lg-6 page-header">
+                        <div class="col-lg-9 page-header">
                             <div class="col-lg-2 align-baseline">
                                 
                                 <img class="text-icon" src="../img/opciones.png">
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-6">
                                                   
                                 <h1>Dieta día</h1>  
                             </div>
                             
                         </div>
-                        <div class="col-lg-6 page-header">
+                        <div class="col-lg-3 page-header">
                             <h1 class=""> <button type="button" class="btn btn-success col-md-offset-7" id="btn-guardar" >Crear dieta</button> </h1>
                         </div>
                     </div>
